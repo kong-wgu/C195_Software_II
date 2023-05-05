@@ -15,6 +15,7 @@ public class Login implements Initializable {
         System.out.println("Login Form is initialized");
     }
 
+    /** This Method is when the user clicks on the login button on the login form */
     public void login_button_clicked(ActionEvent actionEvent) {
         System.out.println("Login Button Clicked!");
     }
