@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="782.0" prefWidth="1046.0" style="-fx-background-color: rgb(150, 150, 150);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreen">
    <children>
       <SplitPane dividerPositions="0.5" layoutX="17.0" layoutY="24.0" orientation="VERTICAL" prefHeight="661.0" prefWidth="1015.0">
@@ -18,7 +17,7 @@
                <children>
                   <TableView fx:id="Appointment_tableview" layoutX="14.0" layoutY="62.0" prefHeight="208.0" prefWidth="987.0">
                     <columns>
-                      <TableColumn prefWidth="117.0" text="Appointment_ID" />
+                      <TableColumn prefWidth="117.0" text="ID" />
                       <TableColumn minWidth="0.0" prefWidth="92.5" text="Title" />
                         <TableColumn prefWidth="75.0" text="Description" />
                         <TableColumn prefWidth="75.0" text="Location" />
@@ -38,9 +37,9 @@
                      </font>
                   </Label>
                   <RadioButton fx:id="Appointment_all_appointment_radiobutton" layoutX="231.0" layoutY="33.0" mnemonicParsing="false" text="All Appointments" />
-                  <Button fx:id="Appointment_add_button" layoutX="14.0" layoutY="281.0" mnemonicParsing="false" text="Add" />
-                  <Button layoutX="105.0" layoutY="281.0" mnemonicParsing="false" onAction="#Appointment_update_button" text="Update" />
-                  <Button layoutX="206.0" layoutY="281.0" mnemonicParsing="false" onAction="#Appointment_delete_button" text="Delete" />
+                  <Button fx:id="Appointment_add_button" layoutX="385.0" layoutY="288.0" mnemonicParsing="false" text="Add" />
+                  <Button fx:id="Appointment_update_button" layoutX="476.0" layoutY="288.0" mnemonicParsing="false" text="Update" />
+                  <Button fx:id="Appointment_delete_button" layoutX="577.0" layoutY="288.0" mnemonicParsing="false" text="Delete" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="332.0" prefWidth="1112.0" style="-fx-background-color: rgb(184, 208, 224);">
@@ -60,19 +59,19 @@
                         <TableColumn prefWidth="139.0" text="Postal Code" />
                     </columns>
                   </TableView>
-                  <Button fx:id="Customers_add_button" layoutX="14.0" layoutY="277.0" mnemonicParsing="false" text="Add" />
-                  <Button fx:id="Customers_update_button" layoutX="102.0" layoutY="277.0" mnemonicParsing="false" text="Update" />
-                  <Button fx:id="Customers_delete_button" layoutX="202.0" layoutY="277.0" mnemonicParsing="false" text="Delete" />
+                  <Button fx:id="Customers_add_button" layoutX="387.0" layoutY="275.0" mnemonicParsing="false" text="Add" />
+                  <Button fx:id="Customers_update_button" layoutX="475.0" layoutY="275.0" mnemonicParsing="false" text="Update" />
+                  <Button fx:id="Customers_delete_button" layoutX="575.0" layoutY="275.0" mnemonicParsing="false" text="Delete" />
                </children>
             </AnchorPane>
         </items>
       </SplitPane>
-      <Button fx:id="Appointment_reports_button" layoutX="14.0" layoutY="715.0" mnemonicParsing="false" text="Reports">
+      <Button fx:id="MainScreen_reports_button" layoutX="14.0" layoutY="715.0" mnemonicParsing="false" text="Reports">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="Appointment_logout_button" layoutX="920.0" layoutY="715.0" mnemonicParsing="false" text="Log Out">
+      <Button fx:id="MainScreen_logout_button" layoutX="920.0" layoutY="715.0" mnemonicParsing="false" text="Log Out">
          <font>
             <Font size="20.0" />
          </font>
