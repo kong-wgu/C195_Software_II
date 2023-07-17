@@ -13,7 +13,7 @@ public class Appointment implements Initializable {
         System.out.println("Appointments are being loaded from database.");
     }
 
-    /**  */
+    /** This function focuses on when the user clicks on the add button on the add appointment window */
     public void Add_Appointment_Button_Clicked(ActionEvent actionEvent) {
     }
 
