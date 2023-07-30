@@ -35,7 +35,11 @@ public class DBConnection {
         conn.close();
     }
 
-    public static void
+    public static Connection getCurrentConnection() {
+
+        return conn;
+
+    }
 
 
 }

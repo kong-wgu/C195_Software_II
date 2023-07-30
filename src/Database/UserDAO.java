@@ -7,9 +7,10 @@ import model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class User_dao {
+public class UserDAO {
 
 
     public static User validateUser(DBConnection conn, String username, String password) throws SQLException {
@@ -34,9 +35,12 @@ public class User_dao {
 
         try{
             String sqlQuery = "SELECT * FROM users WHERE User_Name = '" + username + "' AND password = '" + password + "'";
-            PreparedStatement validate = conn.prepareStatement(sqlQuery);
+            PreparedStatement validate = DBConnection.getCurrentConnection().prepareStatement(sqlQuery);
             var results = validate.executeQuery();
             if (results.next()) {
+
+
+
                 return true;
             }
             return false;
@@ -49,11 +53,25 @@ public class User_dao {
     public static ObservableList<User> getAllUsers() throws SQLException {
 
         String sqlQuery = "Select * from users";
+        PreparedStatement ps = DBConnection.getCurrentConnection().prepareStatement(sqlQuery);
+        ResultSet rs = ps.executeQuery();
+
         ObservableList<User> usersObservableList = FXCollections.observableArrayList();
 
+        try{
+            while(rs.next()){
+                long id = rs.getLong("User_ID");
+                String name = rs.getString("User_Name");
 
+                User newUser = new User(id, name);
+                usersObservableList.add(newUser);
 
+            }
 
+            return usersObservableList;
+        }catch (SQLException e){
+            throw new SQLException("Error: Cannot get all users.");
+        }
     }
 
 }
