@@ -1,18 +1,54 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.time.ZoneId;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Login implements Initializable {
-    public Button login_button;
 
+    @FXML
+    private Button Login_login_button;
+
+    @FXML
+    private Button Login_exit_button;
+
+    @FXML
+    private TextField Login_username_textfield;
+
+    @FXML
+    private TextField Login_password_textfield;
+
+    @FXML
+    private Label Login_zone_label;
+
+
+    /***
+     *
+     * Initializes upon when the screen is set, gets the local area.
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         System.out.println("Login Form is initialized");
+        Locale locale = Locale.getDefault();
+        ZoneId zone = ZoneId.systemDefault();
+
+        ResourceBundle langbundle = ResourceBundle.getBundle("LanguageBundle_" + locale.getLanguage());
+        Login_login_button.setText(langbundle.getString("Login"));
+        Login_exit_button.setText(langbundle.getString("Exit"));
+        Login_username_textfield.setText(langbundle.getString("UserName"));
+        Login_password_textfield.setText(langbundle.getString("Password"));
+        Login_zone_label.setText(langbundle.getString("Location ") + zone);
+
     }
 
     /** This Method is when the user clicks on the login button on the login form */
