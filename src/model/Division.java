@@ -4,13 +4,20 @@ public class Division {
 
     public long ID;
     public String name;
-    public Country country;
+    public long countryID;
 
-    public Division(long id, String name, Country country){
+    public Division(long id, String name, long countryID){
         this.ID = id;
         this.name = name;
-        this.country = country;
+        this.countryID = countryID;
     }
 
+    public long getID(){return ID;}
+
+
+    public String getName(){return name;}
+
+
+    public long getCountryID(){return countryID;}
 
 }

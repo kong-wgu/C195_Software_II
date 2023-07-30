@@ -10,4 +10,9 @@ public class Country {
         this.name = name;
     }
 
+    public long getID(){return id;}
+
+    public String getName(){return name;}
+
+
 }

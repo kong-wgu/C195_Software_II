@@ -31,4 +31,20 @@ public class contactDAO {
 
     }
 
+    public static long getContactID(String email) throws SQLException{
+        String querySQL = "Select * from contacts where Email = " + email;
+        PreparedStatement ps = DBConnection.getCurrentConnection().prepareStatement(querySQL);
+        ResultSet rs = ps.executeQuery();
+        long id = 0;
+        try {
+            while (rs.next()) {
+                id = rs.getLong("Contact_ID");
+            }
+            return id;
+        } catch (SQLException e){
+            throw new SQLException("Error: Was not able to get User ID.");
+        }
+
+    }
+
 }

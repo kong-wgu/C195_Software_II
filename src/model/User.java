@@ -19,4 +19,10 @@ public class User {
         this.id  = id;
         this.name = name;
     }
+
+    public String getUserName(){return name;}
+
+    public long getUserID(){return id;}
+
+
 }

@@ -12,7 +12,6 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-
     public static User validateUser(DBConnection conn, String username, String password) throws SQLException {
 
         try {
@@ -31,25 +30,6 @@ public class UserDAO {
     }
 
 
-    public static boolean update_User(Connection conn, String username, String password) throws SQLException{
-
-        try{
-            String sqlQuery = "SELECT * FROM users WHERE User_Name = '" + username + "' AND password = '" + password + "'";
-            PreparedStatement validate = DBConnection.getCurrentConnection().prepareStatement(sqlQuery);
-            var results = validate.executeQuery();
-            if (results.next()) {
-
-
-
-                return true;
-            }
-            return false;
-        }
-        catch (SQLException e){
-            throw new SQLException("Error: Cannot update User", e);
-        }
-    }
-
     public static ObservableList<User> getAllUsers() throws SQLException {
 
         String sqlQuery = "Select * from users";
@@ -65,7 +45,6 @@ public class UserDAO {
 
                 User newUser = new User(id, name);
                 usersObservableList.add(newUser);
-
             }
 
             return usersObservableList;
