@@ -89,12 +89,12 @@ public class Login implements Initializable {
             String username = Login_username_textfield.getText();
             String password = Login_password_textfield.getText();
 
-            if(username == ""){
+            if(username.isBlank()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(langbundle.getString("Error"));
                 alert.setContentText(langbundle.getString("userRequired"));
                 alert.show();
-            }else if(password == "") {
+            }else if(password.isBlank()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(langbundle.getString("Error"));
                 alert.setContentText(langbundle.getString("passwordRequired"));
