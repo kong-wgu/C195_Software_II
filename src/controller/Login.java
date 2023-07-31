@@ -3,13 +3,13 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.ZoneId;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Login implements Initializable {
@@ -64,6 +64,15 @@ public class Login implements Initializable {
 
     /** This Method is when the user clicks on the login button on the login form */
     public void login_button_clicked(ActionEvent actionEvent) {
-        System.out.println("Login Button Clicked!");
+        langbundle = ResourceBundle.getBundle("language/language", Locale.getDefault());
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, langbundle.getString("exitButton"));
+        Optional<ButtonType> rs = alert.showAndWait();
+
+        if(rs.get() ==ButtonType.OK){
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+        }
+
     }
 }
