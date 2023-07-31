@@ -43,7 +43,7 @@ public class Login implements Initializable {
         System.out.println("Login Form is initialized");
         Locale locale = Locale.getDefault();
         ZoneId zone = ZoneId.systemDefault();
-
+        langbundle = ResourceBundle.getBundle("language", Locale.getDefault());
 
         Login_login_button.setText(langbundle.getString("Login"));
         Login_exit_button.setText(langbundle.getString("Exit"));
