@@ -20,7 +20,7 @@ public class appointmentDAO {
 
         try{
             while(rs.next()){
-                long appointmentID = rs.getInt("AppointmentID");
+                long appointmentID = rs.getInt("Appointment_ID");
                 String title = rs.getString("Title");
                 String description = rs.getString("Description");
                 String location = rs.getString("Location");
