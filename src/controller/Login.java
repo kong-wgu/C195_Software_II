@@ -76,13 +76,15 @@ public class Login implements Initializable {
         Login_zone_label.setText("" + zone);
         Login_timezone_label.setText(langbundle.getString("Location"));
 
+
+
     }
 
     public void login_button_clicked(ActionEvent actionEvent) throws Exception {
 
 
         try{
-            ObservableList<Appointment> allAppointments = appointmentDAO.getAllAppointments();
+
 
             langbundle = ResourceBundle.getBundle("language/language", Locale.getDefault());
 
@@ -100,6 +102,7 @@ public class Login implements Initializable {
                 alert.setContentText(langbundle.getString("passwordRequired"));
                 alert.show();
             }else{
+                ObservableList<Appointment> allAppointments = appointmentDAO.getAllAppointments();
                 User user = UserDAO.validateUser(username, password);
 
                 if (user != null){
@@ -109,7 +112,7 @@ public class Login implements Initializable {
                     boolean iswithin15 =false;
 
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("view/MainScreen.fxml"));
+                    loader.setLocation(getClass().getResource("/view/MainScreen.fxml"));
                     Parent root = loader.load();
                     Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root);
@@ -119,8 +122,8 @@ public class Login implements Initializable {
                     // check all appointment times to see if
                     for (Appointment appointment: allAppointments){
                         timeStarted = appointment.getStartTime();
-                        if(timeStarted.isBefore(plus15) || timeStarted.isEqual(plus15) &&
-                        timeStarted.isAfter(minus15) || timeStarted.isEqual(minus15)){
+                        if((timeStarted.isBefore(plus15) || timeStarted.isEqual(plus15)) &&
+                                (timeStarted.isAfter(minus15) || timeStarted.isEqual(minus15))){
                             appointmentID = appointment.getID();
                             endTime = appointment.getEndTime();
                             iswithin15 = true;
@@ -129,7 +132,8 @@ public class Login implements Initializable {
 
                     if (iswithin15 == true){
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                                langbundle.getString("within15") + " " + appointmentID +
+                                langbundle.getString("within15") + " " + "\n" + langbundle.getString("appointmentid") +
+                                        appointmentID +
                                 "\n" + langbundle.getString("appointmentStartTime") + " " +
                                 timeStarted + "\n" + langbundle.getString("appointmentEndTime") +
                                 " " + endTime);
