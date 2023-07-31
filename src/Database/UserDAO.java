@@ -12,11 +12,11 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    public static User validateUser(DBConnection conn, String username, String password) throws SQLException {
+    public static User validateUser(String username, String password) throws SQLException {
 
         try {
             String sqlQuery = "SELECT * FROM users WHERE User_Name = '" + username + "' AND password = '" + password + "'";
-            PreparedStatement validate = DBConnection.conn.prepareStatement(sqlQuery);
+            PreparedStatement validate = DBConnection.getCurrentConnection().prepareStatement(sqlQuery);
             var results = validate.executeQuery();
             if (results.next()) {
                 long id = results.getLong("User_ID");
