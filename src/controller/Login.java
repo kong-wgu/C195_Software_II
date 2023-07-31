@@ -49,7 +49,7 @@ public class Login implements Initializable {
         Login_exit_button.setText(langbundle.getString("Exit"));
         Login_username_textfield.setText(langbundle.getString("UserName"));
         Login_password_textfield.setText(langbundle.getString("Password"));
-        Login_zone_label.setText(langbundle.getString("Location ") + zone);
+        Login_zone_label.setText(langbundle.getString("Location") + zone);
 
     }
 
