@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 
 public class Login implements Initializable {
 
+    private ResourceBundle langbundle;
+
     @FXML
     private Button Login_login_button;
 
@@ -42,7 +44,7 @@ public class Login implements Initializable {
         Locale locale = Locale.getDefault();
         ZoneId zone = ZoneId.systemDefault();
 
-        ResourceBundle langbundle = ResourceBundle.getBundle("LanguageBundle_" + locale.getLanguage());
+
         Login_login_button.setText(langbundle.getString("Login"));
         Login_exit_button.setText(langbundle.getString("Exit"));
         Login_username_textfield.setText(langbundle.getString("UserName"));
