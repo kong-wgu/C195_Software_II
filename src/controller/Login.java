@@ -31,6 +31,14 @@ public class Login implements Initializable {
     @FXML
     private Label Login_zone_label;
 
+    @FXML
+    private Label Login_username_Label;
+
+    @FXML
+    private Label Login_password_Label;
+
+    @FXML
+    private Label Login_timezone_label;
 
     /***
      *
@@ -47,9 +55,10 @@ public class Login implements Initializable {
 
         Login_login_button.setText(langbundle.getString("Login"));
         Login_exit_button.setText(langbundle.getString("Exit"));
-        Login_username_textfield.setText(langbundle.getString("UserName"));
-        Login_password_textfield.setText(langbundle.getString("Password"));
-        Login_zone_label.setText(langbundle.getString("Location") + zone);
+        Login_username_Label.setText(langbundle.getString("UserName"));
+        Login_password_Label.setText(langbundle.getString("Password"));
+        Login_zone_label.setText("" + zone);
+        Login_timezone_label.setText(langbundle.getString("Location"));
 
     }
 
