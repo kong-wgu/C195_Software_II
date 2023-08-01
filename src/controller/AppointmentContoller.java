@@ -1,6 +1,7 @@
 package controller;
 
 import Database.UserDAO;
+import Database.contactDAO;
 import Database.customerDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Contact;
 import model.Customer;
 import model.User;
 
@@ -41,14 +43,23 @@ public class AppointmentContoller implements Initializable {
     @FXML private Button Add_Appointment_Save_Button;
     @FXML private Button Add_Appointment_Cancel_Button;
 
+    public void initialize() throws SQLException {
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) throws SQLException {
+        try {
+            ObservableList<Customer> allCustomer = customerDAO.getAllCustomers();
+            System.out.println("Customers successfully loaded from database.");
 
-        ObservableList<Customer> allCustomer = customerDAO.getAllCustomers();
-        ObservableList<User> allUsers = UserDAO.getAllUsers();
+            ObservableList<User> allUsers = UserDAO.getAllUsers();
+            System.out.println("Users successfully loaded from database.");
 
-        System.out.println("Appointments are being loaded from database.");
+            ObservableList<Contact> allContacts = contactDAO.getAllContacts();
+            System.out.println("Contacts successfully loaded from database.");
+
+
+
+        }catch (SQLException e){
+            throw new SQLException("Error Loading Data list, check DBConnection.");
+        }
 
     }
 
