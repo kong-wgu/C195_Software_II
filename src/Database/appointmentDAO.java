@@ -45,10 +45,10 @@ public class appointmentDAO {
         }
     }
 
-    public static boolean deleteAppointment(int id) throws SQLException{
+    public static boolean deleteAppointment(long id) throws SQLException{
 
         try{
-            String querySQL = "Delete from appointments WHERE Appointment_ID = " + Integer.toString(id);
+            String querySQL = "Delete from appointments WHERE Appointment_ID = " + Long.toString(id);
             PreparedStatement ps = DBConnection.getCurrentConnection().prepareStatement(querySQL);
             ResultSet rs = ps.executeQuery();
             return true;

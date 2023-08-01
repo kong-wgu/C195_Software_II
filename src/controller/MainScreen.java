@@ -22,6 +22,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 public class MainScreen {
 
@@ -99,13 +100,40 @@ public class MainScreen {
 
     }
 
-    public void appointment_add_button_clicked(ActionEvent actionEvent) {
+    public void appointment_add_button_clicked(ActionEvent actionEvent) throws Exception{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/Add_Appointment.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage win = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+        win.setScene(scene);
+        win.show();
     }
 
     public void appointment_update_button_clicked(ActionEvent actionEvent) {
     }
 
-    public void appointment_delete_button_clicked(ActionEvent actionEvent) {
+    public void appointment_delete_button_clicked(ActionEvent actionEvent) throws Exception {
+        Appointment select = Appointment_tableview.getSelectionModel().getSelectedItem();
+
+        try {
+            if (select == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You did not select any Row from Apppointment Tables! \nPlease choose a valid Appointment!");
+                Optional<ButtonType> rs = alert.showAndWait();
+            } else{
+                long select_ID = select.getID();
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete the appointment with the ID: " + select_ID);
+                Optional<ButtonType> rs = alert.showAndWait();
+                if(rs.get() == ButtonType.OK){
+                    appointmentDAO.deleteAppointment(select_ID);
+
+                    ObservableList<Appointment> allAppointments = appointmentDAO.getAllAppointments();
+                    Appointment_tableview.setItems(allAppointments);
+                }
+            }
+        }catch (Exception e){
+            throw new Exception("Was not able to delete appointment.");
+        }
     }
 
 
