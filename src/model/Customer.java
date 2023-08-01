@@ -16,15 +16,18 @@ public class Customer {
     private long divisionID;
     private String divisionName;
 
-    public Customer(String name, String address, String postalCode, String phone, String createdBy, long divisionID, String divisionName){
-         this.name = name;
-         this.address = address;
-         this.postalCode = postalCode;
-         this.phone = phone;
-         this.createdBy = createdBy;
-         this.divisionID = divisionID;
-         this.divisionName = divisionName;
+    public Customer(long ID,String name, String address, String postalCode, String phone, long divisionID, String divisionName){
+        this.id = ID;
+        this.name = name;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionID = divisionID;
+        this.divisionName = divisionName;
     }
+
+    public long getID() {return id;}
+    public void setID(long ID) {this.id = ID;}
 
     public String getName(){return name;}
     public void setName(String name){

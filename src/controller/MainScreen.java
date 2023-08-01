@@ -1,6 +1,7 @@
 package controller;
 
 import Database.appointmentDAO;
+import Database.customerDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -75,7 +76,15 @@ public class MainScreen {
 
             Appointment_tableview.setItems(allAppointments);
 
+            ObservableList<Customer> allCustomers = customerDAO.getAllCustomers();
+            Customer_ID.setCellValueFactory(new PropertyValueFactory<>("id"));
+            Customer_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
+            Customer_Address.setCellValueFactory(new PropertyValueFactory<>("address"));
+            Customer_Phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+            Customer_State.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+            Customer_PostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
 
+            Customers_tableview.setItems(allCustomers);
 
 
         } catch (SQLException e){

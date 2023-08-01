@@ -20,7 +20,7 @@ public class divisionDAO {
         try{
             while(rs.next()){
                 long id = rs.getLong("Division_ID");
-                String name = rs.getString("Division_Name");
+                String name = rs.getString("Division");
                 long countryID = rs.getLong("Country_ID");
                 Division newDivision = new Division(id, name, countryID);
                 divisionObservableList.add(newDivision);
