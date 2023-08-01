@@ -5,18 +5,22 @@ import Database.customerDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.Appointment;
 import model.Customer;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainScreen {
@@ -108,12 +112,22 @@ public class MainScreen {
 
 
     public void appointment_weekly_radioButton_clicked(ActionEvent actionEvent) {
+        Appointment_all_appointment_radiobutton.selectedProperty().set(false);
+        Appointment_monthly_radiobutton.selectedProperty().set(false);
+
+
     }
 
     public void appointment_monthly_radioButton_clicked(ActionEvent actionEvent) {
+        Appointment_all_appointment_radiobutton.selectedProperty().set(false);
+        Appointment_weekly_radiobutton.selectedProperty().set(false);
+
+
     }
 
     public void appointment_allAppointment_radioButton_selected(ActionEvent actionEvent) {
+        Appointment_weekly_radiobutton.selectedProperty().set(false);
+        Appointment_monthly_radiobutton.selectedProperty().set(false);
     }
 
 
@@ -127,11 +141,24 @@ public class MainScreen {
     public void customers_delete_button_clicked(ActionEvent actionEvent) {
     }
 
-    public void reports_button_clicked(ActionEvent actionEvent) {
+    public void reports_button_clicked(ActionEvent actionEvent) throws IOException {
+        Parent report = FXMLLoader.load(getClass().getResource("/view/Reports.fxml"));
+        Scene scene = new Scene(report);
+        Stage win = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        win.setScene(scene);
+        win.show();
     }
 
 
 
     public void log_out_button_clicked(ActionEvent actionEvent) {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?");
+        Optional<ButtonType> rs = alert.showAndWait();
+
+        if(rs.get() ==ButtonType.OK){
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+        }
     }
 }

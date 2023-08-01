@@ -34,7 +34,6 @@ public class DBConnection {
             throw new SQLException("Failed to close the DB Connection");
         }
 
-        conn.close();
     }
 
     public static Connection getCurrentConnection() {
