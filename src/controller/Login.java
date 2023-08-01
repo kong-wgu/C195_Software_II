@@ -143,18 +143,13 @@ public class Login implements Initializable {
                                 langbundle.getString("nonewithin15"));
                         Optional<ButtonType> confirm = alert.showAndWait();
                     }
-
-
                 }else{
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle(langbundle.getString("Error"));
                     alert.setContentText("incorrectUsernamePassword");
                     alert.show();
-
-
                 }
             }
-
 
         }catch (IOException ioException){
             ioException.printStackTrace();
