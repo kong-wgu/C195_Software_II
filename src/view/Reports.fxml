@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="934.0" prefWidth="1160.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Reports">
+<AnchorPane prefHeight="934.0" prefWidth="1160.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportsController">
    <children>
       <Label fx:id="Reports_Label" layoutX="539.0" layoutY="30.0" text="Reports">
          <font>

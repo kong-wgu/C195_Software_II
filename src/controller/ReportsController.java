@@ -6,7 +6,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Reports implements Initializable {
+public class ReportsController implements Initializable {
 
 
     @Override

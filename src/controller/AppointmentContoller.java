@@ -1,5 +1,8 @@
 package controller;
 
+import Database.UserDAO;
+import Database.customerDAO;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,18 +11,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Customer;
+import model.User;
 
-import java.lang.reflect.Executable;
 import java.net.URL;
-import java.sql.Time;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
 
 public class AppointmentContoller implements Initializable {
 
@@ -42,8 +43,13 @@ public class AppointmentContoller implements Initializable {
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) throws SQLException {
+
+        ObservableList<Customer> allCustomer = customerDAO.getAllCustomers();
+        ObservableList<User> allUsers = UserDAO.getAllUsers();
+
         System.out.println("Appointments are being loaded from database.");
+
     }
 
     /** This function focuses on when the user clicks on the add button on the add appointment window */
@@ -99,7 +105,7 @@ public class AppointmentContoller implements Initializable {
             if (title.isBlank() || type.isBlank() || description.isBlank() ||
                     location.isBlank() || startDate == null || startTime.equals(empty)  ||
                     endDate == null || endTime.equals(empty) ||
-                    customerID == null || contact == null || userID == null) {
+                    customerID == null || contact == null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
                 Optional<ButtonType> rs = alert.showAndWait();
             }

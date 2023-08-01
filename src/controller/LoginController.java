@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class Login implements Initializable {
+public class LoginController implements Initializable {
 
     private ResourceBundle langbundle;
     private long appointmentID;

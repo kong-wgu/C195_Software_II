@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
-public class MainScreen {
+public class MainScreenController {
 
     @FXML private TableView<Appointment> Appointment_tableview;
     @FXML private TableView<Customer> Customers_tableview;
