@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Customer {
 
-    private long id;
+    private long ID;
     private String name;
     private String address;
     private String postalCode;
@@ -17,7 +17,7 @@ public class Customer {
     private String divisionName;
 
     public Customer(long ID,String name, String address, String postalCode, String phone, long divisionID, String divisionName){
-        this.id = ID;
+        this.ID = ID;
         this.name = name;
         this.address = address;
         this.postalCode = postalCode;
@@ -26,8 +26,8 @@ public class Customer {
         this.divisionName = divisionName;
     }
 
-    public long getID() {return id;}
-    public void setID(long ID) {this.id = ID;}
+    public long getID() {return ID;}
+    public void setID(long ID) {this.ID = ID;}
 
     public String getName(){return name;}
     public void setName(String name){
@@ -51,7 +51,7 @@ public class Customer {
 
     public long getDivisionID() { return divisionID;}
     public void setDivisionID(long id){
-        this.id = id;
+        this.ID = id;
     }
 
     public String getDivisionName(){return divisionName;}

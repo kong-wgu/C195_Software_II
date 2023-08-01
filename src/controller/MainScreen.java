@@ -77,7 +77,7 @@ public class MainScreen {
             Appointment_tableview.setItems(allAppointments);
 
             ObservableList<Customer> allCustomers = customerDAO.getAllCustomers();
-            Customer_ID.setCellValueFactory(new PropertyValueFactory<>("id"));
+            Customer_ID.setCellValueFactory(new PropertyValueFactory<>("ID"));
             Customer_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
             Customer_Address.setCellValueFactory(new PropertyValueFactory<>("address"));
             Customer_Phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
