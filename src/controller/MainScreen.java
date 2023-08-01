@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Appointment;
+import model.Customer;
 
 
 import java.net.URL;
@@ -19,26 +20,26 @@ import java.util.ResourceBundle;
 
 public class MainScreen {
 
-    @FXML private TableView Appointment_tableview;
-    @FXML private TableView Customers_tableview;
+    @FXML private TableView<Appointment> Appointment_tableview;
+    @FXML private TableView<Customer> Customers_tableview;
 
-    @FXML private TableColumn Appointment_ID;
-    @FXML private TableColumn Appointment_Title;
-    @FXML private TableColumn Appointment_Description;
-    @FXML private TableColumn Appointment_Location;
-    @FXML private TableColumn Appointment_Type;
-    @FXML private TableColumn Appointment_Start;
-    @FXML private TableColumn Appointment_End;
-    @FXML private TableColumn Appointment_CustomerID;
-    @FXML private TableColumn Appointment_ContactID;
-    @FXML private TableColumn Appointment_UserID;
+    @FXML private TableColumn<?, ?> Appointment_ID;
+    @FXML private TableColumn<?, ?> Appointment_Title;
+    @FXML private TableColumn<?, ?> Appointment_Description;
+    @FXML private TableColumn<?, ?> Appointment_Location;
+    @FXML private TableColumn<?, ?> Appointment_Type;
+    @FXML private TableColumn<?, ?> Appointment_Start;
+    @FXML private TableColumn<?, ?> Appointment_End;
+    @FXML private TableColumn<?, ?> Appointment_CustomerID;
+    @FXML private TableColumn<?, ?> Appointment_ContactID;
+    @FXML private TableColumn<?, ?> Appointment_UserID;
 
-    @FXML private TableColumn Customer_ID;
-    @FXML private TableColumn Customer_Name;
-    @FXML private TableColumn Customer_Address;
-    @FXML private TableColumn Customer_Phone;
-    @FXML private TableColumn Customer_State;
-    @FXML private TableColumn Customer_PostalCode;
+    @FXML private TableColumn<?, ?> Customer_ID;
+    @FXML private TableColumn<?, ?> Customer_Name;
+    @FXML private TableColumn<?, ?> Customer_Address;
+    @FXML private TableColumn<?, ?> Customer_Phone;
+    @FXML private TableColumn<?, ?> Customer_State;
+    @FXML private TableColumn<?, ?> Customer_PostalCode;
 
     @FXML private RadioButton Appointment_all_appointment_radiobutton;
     @FXML private RadioButton Appointment_weekly_radiobutton;
@@ -61,16 +62,16 @@ public class MainScreen {
         try {
             ObservableList<Appointment> allAppointments = appointmentDAO.getAllAppointments();
 
-            Appointment_ID.setCellFactory(new PropertyValueFactory<>("ID")); ;
-            Appointment_Title.setCellFactory(new PropertyValueFactory<>("title"));
-            Appointment_Description.setCellFactory(new PropertyValueFactory<>("description"));
-            Appointment_Location.setCellFactory(new PropertyValueFactory<>("location"));
-            Appointment_Type.setCellFactory(new PropertyValueFactory<>("type"));
-            Appointment_Start.setCellFactory(new PropertyValueFactory<>("startTime"));
-            Appointment_End.setCellFactory(new PropertyValueFactory<>("endTime"));
-            Appointment_CustomerID.setCellFactory(new PropertyValueFactory<>("customerID"));
-            Appointment_ContactID.setCellFactory(new PropertyValueFactory<>("contactID"));
-            Appointment_UserID.setCellFactory(new PropertyValueFactory<>("userID"));
+            Appointment_ID.setCellValueFactory(new PropertyValueFactory<>("ID")); ;
+            Appointment_Title.setCellValueFactory(new PropertyValueFactory<>("title"));
+            Appointment_Description.setCellValueFactory(new PropertyValueFactory<>("description"));
+            Appointment_Location.setCellValueFactory(new PropertyValueFactory<>("location"));
+            Appointment_Type.setCellValueFactory(new PropertyValueFactory<>("type"));
+            Appointment_Start.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+            Appointment_End.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+            Appointment_CustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+            Appointment_ContactID.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+            Appointment_UserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
             Appointment_tableview.setItems(allAppointments);
 
