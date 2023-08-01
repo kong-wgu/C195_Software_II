@@ -75,6 +75,9 @@ public class MainScreen {
 
             Appointment_tableview.setItems(allAppointments);
 
+
+
+
         } catch (SQLException e){
             throw new SQLException("Could not Load Appointments from DB.");
         }
