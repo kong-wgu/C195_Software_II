@@ -3,6 +3,7 @@ package controller;
 import Database.UserDAO;
 import Database.contactDAO;
 import Database.customerDAO;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,9 +25,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AppointmentContoller implements Initializable {
+public class AppointmentContoller{
 
-    @FXML private TextField Add_Appointment_ID_TextField;
     @FXML private TextField Add_Appointment_Type_TextField;
     @FXML private TextField Add_Appointment_Title_TextField;
     @FXML private TextField Add_Appointment_Description_TextField;
@@ -46,16 +46,16 @@ public class AppointmentContoller implements Initializable {
     public void initialize() throws SQLException {
 
         try {
-            ObservableList<Customer> allCustomer = customerDAO.getAllCustomers();
-            System.out.println("Customers successfully loaded from database.");
-
-            ObservableList<User> allUsers = UserDAO.getAllUsers();
-            System.out.println("Users successfully loaded from database.");
+            ObservableList<String> ContactNames = FXCollections.observableArrayList();
 
             ObservableList<Contact> allContacts = contactDAO.getAllContacts();
+
+
+
             System.out.println("Contacts successfully loaded from database.");
 
-
+            Add_Appointment_Start_Time_ChoiceBox.setItems(helper.timeHelper.getAppointmentTimeList());
+            Add_Appointment_End_Time_ChoiceBox.setItems(helper.timeHelper.getAppointmentTimeList());
 
         }catch (SQLException e){
             throw new SQLException("Error Loading Data list, check DBConnection.");
@@ -65,11 +65,37 @@ public class AppointmentContoller implements Initializable {
 
     /** This function focuses on when the user clicks on the add button on the add appointment window */
     public void Add_Appointment_Button_Clicked(ActionEvent actionEvent) throws Exception {
-        check_for_Blanks();
+        String type = Add_Appointment_Type_TextField.getText();
+        String title = Add_Appointment_Title_TextField.getText();
+        String description = Add_Appointment_Description_TextField.getText();
+        String location = Add_Appointment_Location_TextField.getText();
+        LocalDate start_date = Add_Appointment_Start_Date_DatePicker.getValue();
+        LocalDate end_date = Add_Appointment_End_Date_DatePicker.getValue();
+        String start_time = Add_Appointment_Start_Time_ChoiceBox.getValue();
+        String end_time = Add_Appointment_End_Time_ChoiceBox.getValue();
+        String customer_ID = Add_Appointment_Customer_ID_ChoiceBox.getValue();
+        String user_ID = Add_Appointment_User_ID_ChoiceBox.getValue();
+        String contact = Add_Appointment_Contact_ChoiceBox.getValue();
+
+
+        try {
+            if (!check_for_Blanks()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
+                Optional<ButtonType> rs = alert.showAndWait();
+            }
+
+            if (check_times()) {
+
+            }
+        }catch(Exception e){
+            throw new Exception("");
+        }
+
+
     }
 
     /**  */
-    public void Add_Appointment_Cancel_Button_Clicked(ActionEvent actionEvent) throws  Exception{
+    public void Add_Appointment_Cancel_Button_Clicked(ActionEvent actionEvent) throws Exception{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?");
         Optional<ButtonType> rs = alert.showAndWait();
 
@@ -92,7 +118,7 @@ public class AppointmentContoller implements Initializable {
     public void Modify_Appointment_Cancel_Button_Clicked(ActionEvent actionEvent) {
     }
 
-    public void check_for_Blanks() throws NullPointerException{
+    public boolean check_for_Blanks() throws NullPointerException{
         try {
             String title = Add_Appointment_Title_TextField.getText();
             String type = Add_Appointment_Type_TextField.getText();
@@ -117,11 +143,39 @@ public class AppointmentContoller implements Initializable {
                     location.isBlank() || startDate == null || startTime.equals(empty)  ||
                     endDate == null || endTime.equals(empty) ||
                     customerID == null || contact == null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
-                Optional<ButtonType> rs = alert.showAndWait();
+                return false;
             }
+            return true;
         }catch(NullPointerException e){
             throw new NullPointerException("There is a null object within the text field.");
         }
     }
+
+    public boolean check_times(){
+
+        LocalDate start_day = Add_Appointment_Start_Date_DatePicker.getValue();
+        LocalDate end_day = Add_Appointment_End_Date_DatePicker.getValue();
+        String start_time = Add_Appointment_Start_Time_ChoiceBox.getValue();
+        String end_time = Add_Appointment_End_Time_ChoiceBox.getValue();
+
+        LocalTime time_start = LocalTime.parse(start_time);
+        LocalTime time_end = LocalTime.parse(end_time);
+
+        boolean check = false;
+
+        if(start_day.isAfter(end_day) || end_day.isBefore(start_day)) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Your Appointment Dates must be within the same Day!");
+            Optional<ButtonType> rs = alert.showAndWait();
+            return check;
+        } else if(time_start.isAfter(time_end) || time_end.isBefore(time_start)){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Times cannot have End Time before Start Time\n \nOr\n\nTimes Cannot have Start Time after End Time! ");
+            Optional<ButtonType> rs = alert.showAndWait();
+            return check;
+        }else if(start_day.isEqual(end_day) && (time_start.isBefore(time_end) && time_end.isAfter(time_start))){
+
+            check = true;
+        }
+        return check;
+    }
+
 }

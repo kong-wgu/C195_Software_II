@@ -45,7 +45,6 @@ public class customerDAO {
             throw new SQLException("Could not Load Customers from Database!");
         }
 
-
     }
 
-}
+ }
