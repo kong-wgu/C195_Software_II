@@ -91,9 +91,19 @@ public class AppointmentContoller{
         LocalDate end_date = Add_Appointment_End_Date_DatePicker.getValue();
         String start_time = Add_Appointment_Start_Time_ChoiceBox.getValue();
         String end_time = Add_Appointment_End_Time_ChoiceBox.getValue();
+
         String Customer_ID = Add_Appointment_Customer_ID_ChoiceBox.getValue();
+        int lastIndent = Customer_ID.lastIndexOf(" ");
+        Customer_ID = Customer_ID.substring(lastIndent);
+
         String user_ID = Add_Appointment_User_ID_ChoiceBox.getValue();
+        lastIndent = user_ID.lastIndexOf(" ");
+        user_ID = user_ID.substring(lastIndent);
+
         String contact = Add_Appointment_Contact_ChoiceBox.getValue();
+        lastIndent = contact.lastIndexOf(" ");
+        contact = contact.substring(lastIndent);
+
 
         String startDate = start_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         startDate = startDate + " " + start_time + ":00";
@@ -113,11 +123,11 @@ public class AppointmentContoller{
 
             if (check_times()) {
                 appointmentDAO.addAppointment(title, description, location, type, startDate, endDate,
-                lastUpdate, Customer_ID, user_ID, contact);
+                createDate ,lastUpdate, Customer_ID, user_ID, contact);
 
             }
         }catch(Exception e){
-            throw new Exception("");
+            throw new Exception("Possible Null or Wrong Data Type");
         }
 
 

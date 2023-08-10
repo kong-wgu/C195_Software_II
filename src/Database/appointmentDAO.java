@@ -62,7 +62,7 @@ public class appointmentDAO {
 
     public static void addAppointment(String title, String description, String location,
                                  String type, String startTime, String endTime, String CreateDate,
-                                 String customerID, String userID, String contactID) throws SQLException{
+                                 String lastUpdate, String customerID, String userID, String contactID) throws SQLException{
 
         String loggedUser = User.userLoggedIn;
 
@@ -79,16 +79,20 @@ public class appointmentDAO {
             ps.setString(4 , type);
             ps.setString(5 , startTime);
             ps.setString(6 , endTime);
-            ps.setString(7 , );
-            ps.setString(8 , );
-            ps.setString(9 , );
-            ps.setString(10 , );
-            ps.setString(11 , );
-            ps.setString(12 , );
-            ps.setString(13 , );
+            ps.setString(7 , CreateDate);
+            ps.setString(8 , loggedUser);
+            ps.setString(9 , lastUpdate);
+            ps.setString(10 , loggedUser);
+            ps.setString(11 , customerID);
+            ps.setString(12 , userID);
+            ps.setString(13 , contactID);
+
+            ps.executeQuery();
+
+
 
         }catch(SQLException e){
-
+            throw new SQLException("Error Uploading Appointment to DataBase");
         }
 
     }
