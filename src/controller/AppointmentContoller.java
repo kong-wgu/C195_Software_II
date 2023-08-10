@@ -1,6 +1,7 @@
 package controller;
 
 import Database.UserDAO;
+import Database.appointmentDAO;
 import Database.contactDAO;
 import Database.customerDAO;
 import javafx.collections.FXCollections;
@@ -20,8 +21,10 @@ import model.User;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -47,15 +50,29 @@ public class AppointmentContoller{
 
         try {
             ObservableList<String> ContactNames = FXCollections.observableArrayList();
-
             ObservableList<Contact> allContacts = contactDAO.getAllContacts();
 
+            // Lambda #1
+            allContacts.forEach(contact -> ContactNames.add(contact.getName() + " : " + contact.getID()));
+            Add_Appointment_Contact_ChoiceBox.setItems(ContactNames);
 
+            ObservableList<Customer> allCustomers = customerDAO.getAllCustomers();
+            ObservableList<String> CustomerID = FXCollections.observableArrayList();
 
-            System.out.println("Contacts successfully loaded from database.");
+            allCustomers.forEach(customer -> CustomerID.add(Long.toString(customer.getID()) + " : " + customer.getName()));
+            Add_Appointment_Customer_ID_ChoiceBox.setItems(CustomerID);
+
+            ObservableList<User> allUsers = UserDAO.getAllUsers();
+            ObservableList<String> UserID = FXCollections.observableArrayList();
+
+            allUsers.forEach(user -> UserID.add(Long.toString(user.getUserID())));
+            Add_Appointment_User_ID_ChoiceBox.setItems(UserID);
+
 
             Add_Appointment_Start_Time_ChoiceBox.setItems(helper.timeHelper.getAppointmentTimeList());
             Add_Appointment_End_Time_ChoiceBox.setItems(helper.timeHelper.getAppointmentTimeList());
+
+
 
         }catch (SQLException e){
             throw new SQLException("Error Loading Data list, check DBConnection.");
@@ -65,6 +82,7 @@ public class AppointmentContoller{
 
     /** This function focuses on when the user clicks on the add button on the add appointment window */
     public void Add_Appointment_Button_Clicked(ActionEvent actionEvent) throws Exception {
+
         String type = Add_Appointment_Type_TextField.getText();
         String title = Add_Appointment_Title_TextField.getText();
         String description = Add_Appointment_Description_TextField.getText();
@@ -73,10 +91,19 @@ public class AppointmentContoller{
         LocalDate end_date = Add_Appointment_End_Date_DatePicker.getValue();
         String start_time = Add_Appointment_Start_Time_ChoiceBox.getValue();
         String end_time = Add_Appointment_End_Time_ChoiceBox.getValue();
-        String customer_ID = Add_Appointment_Customer_ID_ChoiceBox.getValue();
+        String Customer_ID = Add_Appointment_Customer_ID_ChoiceBox.getValue();
         String user_ID = Add_Appointment_User_ID_ChoiceBox.getValue();
         String contact = Add_Appointment_Contact_ChoiceBox.getValue();
 
+        String startDate = start_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        startDate = startDate + " " + start_time + ":00";
+
+        String endDate = end_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        endDate = endDate + " " + end_time + ":00";
+
+        String createDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+
+        String lastUpdate = createDate;
 
         try {
             if (!check_for_Blanks()) {
@@ -85,6 +112,8 @@ public class AppointmentContoller{
             }
 
             if (check_times()) {
+                appointmentDAO.addAppointment(title, description, location, type, startDate, endDate,
+                lastUpdate, Customer_ID, user_ID, contact);
 
             }
         }catch(Exception e){

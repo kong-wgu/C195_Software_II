@@ -2,8 +2,6 @@ package model;
 
 public class Contact {
 
-
-
     public long ID;
     public String name;
     public String email;
@@ -15,5 +13,12 @@ public class Contact {
 
     }
 
+    public String getName(){
+        return this.name;
+    }
+
+    public String getID(){
+        return Long.toString(this.ID);
+    }
 
 }

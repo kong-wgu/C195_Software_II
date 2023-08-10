@@ -3,6 +3,7 @@ package Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
+import model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,6 +56,39 @@ public class appointmentDAO {
 
         }catch(SQLException e){
             throw new SQLException("Error: Could not delete appointment.");
+        }
+
+    }
+
+    public static void addAppointment(String title, String description, String location,
+                                 String type, String startTime, String endTime, String CreateDate,
+                                 String customerID, String userID, String contactID) throws SQLException{
+
+        String loggedUser = User.userLoggedIn;
+
+        try{
+            String insert = "INSERT INTO APPOINTMENTS(Title, Description, Location, Type, Start," +
+                    " End, Create_Date, Create_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) " +
+                    "Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement ps = DBConnection.getCurrentConnection().prepareStatement(insert);
+
+            ps.setString(1 , title);
+            ps.setString(2, description);
+            ps.setString(3 , location);
+            ps.setString(4 , type);
+            ps.setString(5 , startTime);
+            ps.setString(6 , endTime);
+            ps.setString(7 , );
+            ps.setString(8 , );
+            ps.setString(9 , );
+            ps.setString(10 , );
+            ps.setString(11 , );
+            ps.setString(12 , );
+            ps.setString(13 , );
+
+        }catch(SQLException e){
+
         }
 
     }

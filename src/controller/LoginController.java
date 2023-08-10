@@ -110,6 +110,7 @@ public class LoginController implements Initializable {
                     LocalDateTime minus15 = LocalDateTime.now().minusMinutes(15);
                     LocalDateTime plus15 = LocalDateTime.now().plusMinutes(15);
                     boolean iswithin15 =false;
+                    User.userLoggedIn = username;
 
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("/view/MainScreen.fxml"));

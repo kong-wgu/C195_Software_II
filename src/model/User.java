@@ -15,6 +15,8 @@ public class User {
     public static final DateTimeFormatter FORMAT_DATE = DateTimeFormatter.ISO_LOCAL_DATE;
     public static final DateTimeFormatter FORMAT_TIME = DateTimeFormatter.ofPattern("HH:mm");
 
+    public static String userLoggedIn;
+
     public User(long id, String name){
         this.id  = id;
         this.name = name;
