@@ -18,6 +18,7 @@ import model.Contact;
 import model.Customer;
 import model.User;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -59,7 +60,7 @@ public class AppointmentContoller{
             ObservableList<Customer> allCustomers = customerDAO.getAllCustomers();
             ObservableList<String> CustomerID = FXCollections.observableArrayList();
 
-            allCustomers.forEach(customer -> CustomerID.add(Long.toString(customer.getID()) + " : " + customer.getName()));
+            allCustomers.forEach(customer -> CustomerID.add(customer.getName() + " : " + Long.toString(customer.getID())));
             Add_Appointment_Customer_ID_ChoiceBox.setItems(CustomerID);
 
             ObservableList<User> allUsers = UserDAO.getAllUsers();
@@ -81,53 +82,65 @@ public class AppointmentContoller{
     }
 
     /** This function focuses on when the user clicks on the add button on the add appointment window */
-    public void Add_Appointment_Button_Clicked(ActionEvent actionEvent) throws Exception {
-
-        String type = Add_Appointment_Type_TextField.getText();
-        String title = Add_Appointment_Title_TextField.getText();
-        String description = Add_Appointment_Description_TextField.getText();
-        String location = Add_Appointment_Location_TextField.getText();
-        LocalDate start_date = Add_Appointment_Start_Date_DatePicker.getValue();
-        LocalDate end_date = Add_Appointment_End_Date_DatePicker.getValue();
-        String start_time = Add_Appointment_Start_Time_ChoiceBox.getValue();
-        String end_time = Add_Appointment_End_Time_ChoiceBox.getValue();
-
-        String Customer_ID = Add_Appointment_Customer_ID_ChoiceBox.getValue();
-        int lastIndent = Customer_ID.lastIndexOf(" ");
-        Customer_ID = Customer_ID.substring(lastIndent);
-
-        String user_ID = Add_Appointment_User_ID_ChoiceBox.getValue();
-        lastIndent = user_ID.lastIndexOf(" ");
-        user_ID = user_ID.substring(lastIndent);
-
-        String contact = Add_Appointment_Contact_ChoiceBox.getValue();
-        lastIndent = contact.lastIndexOf(" ");
-        contact = contact.substring(lastIndent);
+    public void Add_Appointment_Button_Clicked(ActionEvent actionEvent) throws SQLException, IOException {
 
 
-        String startDate = start_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        startDate = startDate + " " + start_time + ":00";
 
-        String endDate = end_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        endDate = endDate + " " + end_time + ":00";
 
-        String createDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
-
-        String lastUpdate = createDate;
-
-        try {
+        try{
             if (!check_for_Blanks()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
                 Optional<ButtonType> rs = alert.showAndWait();
-            }
+            }else if (check_times()) {
 
-            if (check_times()) {
+                String type = Add_Appointment_Type_TextField.getText();
+                String title = Add_Appointment_Title_TextField.getText();
+                String description = Add_Appointment_Description_TextField.getText();
+                String location = Add_Appointment_Location_TextField.getText();
+                LocalDate start_date = Add_Appointment_Start_Date_DatePicker.getValue();
+                LocalDate end_date = Add_Appointment_End_Date_DatePicker.getValue();
+                String start_time = Add_Appointment_Start_Time_ChoiceBox.getValue();
+                String end_time = Add_Appointment_End_Time_ChoiceBox.getValue();
+
+                String Customer_ID = Add_Appointment_Customer_ID_ChoiceBox.getValue();
+
+                int lastIndent = Customer_ID.lastIndexOf(" ");
+                lastIndent = lastIndent + 1;
+                Customer_ID = Customer_ID.substring(lastIndent);
+
+                String user_ID = Add_Appointment_User_ID_ChoiceBox.getValue();
+
+
+                String contact = Add_Appointment_Contact_ChoiceBox.getValue();
+                lastIndent = contact.lastIndexOf(" ");
+                lastIndent = lastIndent + 1;
+                contact = contact.substring(lastIndent);
+
+
+                String startDate = start_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                startDate = startDate + " " + start_time + ":00";
+
+                String endDate = end_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                endDate = endDate + " " + end_time + ":00";
+
+                String createDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+
+                String lastUpdate = createDate;
+
                 appointmentDAO.addAppointment(title, description, location, type, startDate, endDate,
                 createDate ,lastUpdate, Customer_ID, user_ID, contact);
 
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/view/MainScreen.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+
             }
-        }catch(Exception e){
-            throw new Exception("Possible Null or Wrong Data Type");
+        }catch(SQLException e){
+            throw new SQLException("Possible Null or Wrong Data Type");
         }
 
 
@@ -202,7 +215,7 @@ public class AppointmentContoller{
 
         boolean check = false;
 
-        if(start_day.isAfter(end_day) || end_day.isBefore(start_day)) {
+        if(start_day.isAfter(end_day) || end_day.isBefore(start_day) || end_day.isAfter(start_day)) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Your Appointment Dates must be within the same Day!");
             Optional<ButtonType> rs = alert.showAndWait();
             return check;

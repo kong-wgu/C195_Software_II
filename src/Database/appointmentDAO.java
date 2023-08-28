@@ -8,10 +8,12 @@ import model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class appointmentDAO {
 
+    public static Long current_DB_ID;
 
     public static ObservableList<Appointment> getAllAppointments() throws SQLException{
         String querySQL = "Select * from appointments";
@@ -32,6 +34,8 @@ public class appointmentDAO {
                 long customerID = rs.getInt("Customer_ID");
                 long userID = rs.getInt("User_ID");
                 long contactID = rs.getInt("Contact_ID");
+
+                current_DB_ID = appointmentID;
 
                 Appointment app = new Appointment(appointmentID, title, description, location, type, start,
                         end, create_by, customerID, userID, contactID);
@@ -65,29 +69,30 @@ public class appointmentDAO {
                                  String lastUpdate, String customerID, String userID, String contactID) throws SQLException{
 
         String loggedUser = User.userLoggedIn;
-
+        String user = User.userLoggedIn;
         try{
             String insert = "INSERT INTO APPOINTMENTS(Title, Description, Location, Type, Start," +
-                    " End, Create_Date, Create_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) " +
+                    " End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) " +
                     "Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement ps = DBConnection.getCurrentConnection().prepareStatement(insert);
+
 
             ps.setString(1 , title);
             ps.setString(2, description);
             ps.setString(3 , location);
             ps.setString(4 , type);
-            ps.setString(5 , startTime);
-            ps.setString(6 , endTime);
-            ps.setString(7 , CreateDate);
-            ps.setString(8 , loggedUser);
-            ps.setString(9 , lastUpdate);
+            ps.setTimestamp(5 , Timestamp.valueOf(startTime));
+            ps.setTimestamp(6 , Timestamp.valueOf(endTime));
+            ps.setTimestamp(7 ,Timestamp.valueOf(CreateDate));
+            ps.setString(8 , user);
+            ps.setTimestamp(9 ,Timestamp.valueOf(lastUpdate));
             ps.setString(10 , loggedUser);
             ps.setString(11 , customerID);
             ps.setString(12 , userID);
             ps.setString(13 , contactID);
 
-            ps.executeQuery();
+            ps.executeUpdate();
 
 
 
