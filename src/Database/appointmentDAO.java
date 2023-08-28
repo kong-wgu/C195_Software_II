@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 public class appointmentDAO {
 
-    public static Long current_DB_ID;
 
     public static ObservableList<Appointment> getAllAppointments() throws SQLException{
         String querySQL = "Select * from appointments";
@@ -35,7 +34,6 @@ public class appointmentDAO {
                 long userID = rs.getInt("User_ID");
                 long contactID = rs.getInt("Contact_ID");
 
-                current_DB_ID = appointmentID;
 
                 Appointment app = new Appointment(appointmentID, title, description, location, type, start,
                         end, create_by, customerID, userID, contactID);
@@ -55,7 +53,7 @@ public class appointmentDAO {
         try{
             String querySQL = "Delete from appointments WHERE Appointment_ID = " + Long.toString(id);
             PreparedStatement ps = DBConnection.getCurrentConnection().prepareStatement(querySQL);
-            ResultSet rs = ps.executeQuery();
+            ps.executeUpdate();
             return true;
 
         }catch(SQLException e){

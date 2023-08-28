@@ -2,6 +2,7 @@ package controller;
 
 import Database.appointmentDAO;
 import Database.customerDAO;
+import com.sun.nio.file.ExtendedWatchEventModifier;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 import model.Appointment;
 import model.Customer;
 
-
+import helper.holderData;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -25,6 +26,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
 public class MainScreenController {
+
 
     @FXML private TableView<Appointment> Appointment_tableview;
     @FXML private TableView<Customer> Customers_tableview;
@@ -110,7 +112,33 @@ public class MainScreenController {
         win.show();
     }
 
-    public void appointment_update_button_clicked(ActionEvent actionEvent) {
+    public void appointment_update_button_clicked(ActionEvent actionEvent) throws Exception {
+
+        Appointment select = Appointment_tableview.getSelectionModel().getSelectedItem();
+
+        try {
+            if (select == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You did not select any Row from Apppointment Tables! \nPlease choose a valid Appointment!");
+                Optional<ButtonType> rs = alert.showAndWait();
+            } else{
+                long selectID = select.getID();
+
+                holderData.setSelected_Appointment(selectID);
+
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/view/Modify_Appointment.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage win = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+                win.setScene(scene);
+                win.show();
+            }
+        }catch (Exception e){
+            throw new Exception("Was not able to delete appointment.");
+        }
+
+
+
     }
 
     public void appointment_delete_button_clicked(ActionEvent actionEvent) throws Exception {
@@ -122,7 +150,7 @@ public class MainScreenController {
                 Optional<ButtonType> rs = alert.showAndWait();
             } else{
                 long select_ID = select.getID();
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete the appointment with the ID: " + select_ID);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the appointment with the ID: " + select_ID);
                 Optional<ButtonType> rs = alert.showAndWait();
                 if(rs.get() == ButtonType.OK){
                     appointmentDAO.deleteAppointment(select_ID);

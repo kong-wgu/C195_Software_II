@@ -17,8 +17,8 @@ public class Contact {
         return this.name;
     }
 
-    public String getID(){
-        return Long.toString(this.ID);
+    public Long getID(){
+        return (this.ID);
     }
 
 }

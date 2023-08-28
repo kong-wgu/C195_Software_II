@@ -36,6 +36,7 @@ public class AppointmentContoller{
     @FXML private TextField Add_Appointment_Description_TextField;
     @FXML private TextField Add_Appointment_Location_TextField;
 
+
     @FXML private DatePicker Add_Appointment_Start_Date_DatePicker;
     @FXML private ChoiceBox<String> Add_Appointment_Start_Time_ChoiceBox;
     @FXML private DatePicker Add_Appointment_End_Date_DatePicker;
@@ -160,14 +161,6 @@ public class AppointmentContoller{
             stage.setScene(scene);
             stage.show();
         }
-    }
-
-    /**  */
-    public void Modify_Appointment_Button_Clicked(ActionEvent actionEvent) {
-    }
-
-    /**  */
-    public void Modify_Appointment_Cancel_Button_Clicked(ActionEvent actionEvent) {
     }
 
     public boolean check_for_Blanks() throws NullPointerException{
