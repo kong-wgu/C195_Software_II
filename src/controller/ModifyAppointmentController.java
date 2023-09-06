@@ -28,7 +28,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-public class ModifyAppointmentContoller {
+public class ModifyAppointmentController {
 
     @FXML private TextField Modify_Appointment_ID_TextField;
     @FXML private TextField Modify_Appointment_Type_TextField;
@@ -126,14 +126,13 @@ public class ModifyAppointmentContoller {
     public void Modify_Appointment_Button_Clicked(ActionEvent actionEvent) throws SQLException, IOException {
 
 
-
-
         try{
             if (!check_for_Blanks()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
                 Optional<ButtonType> rs = alert.showAndWait();
             }else if (check_times()) {
 
+                String id = Modify_Appointment_ID_TextField.getText();
                 String type = Modify_Appointment_Type_TextField.getText();
                 String title = Modify_Appointment_Title_TextField.getText();
                 String description = Modify_Appointment_Description_TextField.getText();
@@ -168,8 +167,8 @@ public class ModifyAppointmentContoller {
 
                 String lastUpdate = createDate;
 
-                appointmentDAO.addAppointment(title, description, location, type, startDate, endDate,
-                createDate ,lastUpdate, Customer_ID, user_ID, contact);
+                appointmentDAO.modifyAppointment(id, title, description, location, type, startDate,
+                        endDate, lastUpdate, Customer_ID, user_ID, contact);
 
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/view/MainScreen.fxml"));

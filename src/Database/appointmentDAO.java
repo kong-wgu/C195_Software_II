@@ -100,4 +100,40 @@ public class appointmentDAO {
 
     }
 
+    public static void modifyAppointment(String id, String title, String description, String location,
+                                         String type, String startTime, String endTime,
+                                         String lastUpdate, String customerID, String userID, String contactID) throws SQLException{
+
+        String loggedUser = User.userLoggedIn;
+        String user = User.userLoggedIn;
+        try{
+            String insert = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?," +
+                    "Start=?, End=?, Last_Updated_By=?, Last_Update=?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID = ?;";
+
+            PreparedStatement ps = DBConnection.getCurrentConnection().prepareStatement(insert);
+
+
+            ps.setString(1 , title);
+            ps.setString(2, description);
+            ps.setString(3 , location);
+            ps.setString(4 , type);
+            ps.setTimestamp(5 , Timestamp.valueOf(startTime));
+            ps.setTimestamp(6 , Timestamp.valueOf(endTime));
+            ps.setString(7 , loggedUser);
+            ps.setTimestamp(8 ,Timestamp.valueOf(lastUpdate));
+            ps.setString(9 , customerID);
+            ps.setString(10 , userID);
+            ps.setString(11 , contactID);
+            ps.setString(12, id);
+
+            ps.executeUpdate();
+
+
+
+        }catch(SQLException e){
+            throw new SQLException("Error Uploading Appointment to DataBase");
+        }
+
+    }
+
 }
