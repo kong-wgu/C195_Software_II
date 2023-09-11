@@ -4,6 +4,7 @@ import Database.UserDAO;
 import Database.appointmentDAO;
 import Database.contactDAO;
 import Database.customerDAO;
+import helper.calculatehelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,12 +48,16 @@ public class ModifyAppointmentController {
     @FXML private Button Modify_Appointment_Save_Button;
     @FXML private Button Modify_Appointment_Cancel_Button;
 
+    private ObservableList<String> ContactNames;
+    private ObservableList<Contact> allContacts;
+    private ObservableList<Appointment> allAppointments;
+
     public void initialize() throws SQLException {
 
         try {
-            ObservableList<String> ContactNames = FXCollections.observableArrayList();
-            ObservableList<Contact> allContacts = contactDAO.getAllContacts();
-            ObservableList<Appointment> allAppointments = appointmentDAO.getAllAppointments();
+            ContactNames = FXCollections.observableArrayList();
+            allContacts = contactDAO.getAllContacts();
+            allAppointments = appointmentDAO.getAllAppointments();
 
             // Lambda #1
             allContacts.forEach(contact -> ContactNames.add(contact.getName() + " : " + contact.getID()));
@@ -110,6 +115,7 @@ public class ModifyAppointmentController {
                     Modify_Appointment_End_Time_ChoiceBox.setValue(app.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
                     Modify_Appointment_Location_TextField.setText(app.getLocation());
                     Modify_Appointment_Type_TextField.setText(app.getType());
+                    holderData.setHolderAppointment(app);
                     break;
                 }
             }
@@ -167,16 +173,21 @@ public class ModifyAppointmentController {
 
                 String lastUpdate = createDate;
 
-                appointmentDAO.modifyAppointment(id, title, description, location, type, startDate,
-                        endDate, lastUpdate, Customer_ID, user_ID, contact);
+                Appointment test = new Appointment(9999, title, description, location, type, LocalDateTime.parse(startDate), LocalDateTime.parse(endDate) , lastUpdate,
+                        Long.getLong(Customer_ID), Long.getLong(user_ID), Long.getLong(contact));
 
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/view/MainScreen.fxml"));
-                Parent root = loader.load();
-                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+                if(calculatehelper.conflictswithAppointments(allAppointments, test) == false) {
+                    appointmentDAO.modifyAppointment(id, title, description, location, type, startDate,
+                            endDate, lastUpdate, Customer_ID, user_ID, contact);
+
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("/view/MainScreen.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                }
 
             }
         }catch(SQLException e){
