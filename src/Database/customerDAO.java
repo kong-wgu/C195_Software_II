@@ -9,6 +9,7 @@ import model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -51,7 +52,7 @@ public class customerDAO {
 
     }
 
-    public static boolean updateCustomer(Customer newCustomer, LocalTime lastUpdate) throws SQLException{
+    public static boolean updateCustomer(Customer newCustomer, String lastUpdate) throws SQLException{
         ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
         customerObservableList = getAllCustomers();
         long newCustomer_ID = newCustomer.getID();
@@ -80,9 +81,10 @@ public class customerDAO {
                     ps.setString(2, address);
                     ps.setString(3, postalCode);
                     ps.setString(4, phone);
-                    ps.setTimestamp(5, lastUpdate);
+                    ps.setTimestamp(5, Timestamp.valueOf(lastUpdate));
                     ps.setString(6, divisionID);
 
+                    ps.executeUpdate();
 
                 }catch(SQLException e){
                     throw new SQLException("Could not update Customer, please check your query or data objects.");
