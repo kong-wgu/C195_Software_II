@@ -4,10 +4,12 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import model.Appointment;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class calculatehelper {
 
@@ -28,25 +30,28 @@ public class calculatehelper {
             LocalDateTime start = app.getStartTime();
             LocalDateTime end = app.getEndTime();
 
-            if(appDate == desiredDate) {
+            if(appDate.isEqual(desiredDate)) {
 
                 if ((start.isEqual(desiredStart)) || (end.isEqual(desiredStart))) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Your Appointment is conflicted with a existing appointment already.\n " +
-                            "please change your time or modify your pre-existing appointment so it doesn't conflict.\n\n" +
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Your Appointment is conflicted with a existing appointment already.\n" +
+                            "Please change your time or modify your pre-existing appointment so it doesn't conflict.\n\n" +
                             "Conflicting Appointment ID: " + app.getID() + "\nAppointment Start Time: " + app.getStartTime().toString()
                             + "\nAppointment End Time: " + app.getEndTime().toString());
+                    Optional<ButtonType> rs = alert.showAndWait();
                     return false;
                 } else if ((desiredStart.isAfter(start)) && (desiredStart.isBefore(end))) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Your Appointment is conflicted with a existing appointment already.\n " +
-                            "please change your time or modify your pre-existing appointment so it doesn't conflict.\n\n" +
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Your Appointment is conflicted with a existing appointment already.\n" +
+                            "Please change your time or modify your pre-existing appointment so it doesn't conflict.\n\n" +
                             "Conflicting Appointment ID: " + app.getID() + "\nAppointment Start Time: " + app.getStartTime().toString()
                             + "\nAppointment End Time: " + app.getEndTime().toString());
+                    Optional<ButtonType> rs = alert.showAndWait();
                     return false;
                 } else if ((desiredEnd.isAfter(start)) && (desiredEnd.isBefore(end))) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Your Appointment is conflicted with a existing appointment already.\n " +
-                            "please change your time or modify your pre-existing appointment so it doesn't conflict.\n\n" +
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Your Appointment is conflicted with a existing appointment already.\n" +
+                            "Please change your time or modify your pre-existing appointment so it doesn't conflict.\n\n" +
                             "Conflicting Appointment ID: " + app.getID() + "\nAppointment Start Time: " + app.getStartTime().toString()
                             + "\nAppointment End Time: " + app.getEndTime().toString());
+                    Optional<ButtonType> rs = alert.showAndWait();
                     return false;
                 }
             }

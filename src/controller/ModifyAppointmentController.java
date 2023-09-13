@@ -173,10 +173,19 @@ public class ModifyAppointmentController {
 
                 String lastUpdate = createDate;
 
-                Appointment test = new Appointment(9999, title, description, location, type, LocalDateTime.parse(startDate), LocalDateTime.parse(endDate) , lastUpdate,
-                        Long.getLong(Customer_ID), Long.getLong(user_ID), Long.getLong(contact));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                if(calculatehelper.conflictswithAppointments(allAppointments, test) == false) {
+                long dummy_id = 0;
+                LocalDateTime test_startDate = LocalDateTime.parse(startDate, formatter);
+                LocalDateTime test_endDate = LocalDateTime.parse(endDate, formatter);
+                long dummy_customer_ID = Long.parseLong(Customer_ID);
+                long dummy_user_ID = Long.parseLong(user_ID);
+                long dummy_contact = Long.parseLong(contact);
+
+                Appointment test = new Appointment(dummy_id, title, description, location, type, test_startDate, test_endDate, lastUpdate,
+                        dummy_customer_ID, dummy_user_ID, dummy_contact);
+
+                if(calculatehelper.conflictswithAppointments(allAppointments, test) == true) {
                     appointmentDAO.modifyAppointment(id, title, description, location, type, startDate,
                             endDate, lastUpdate, Customer_ID, user_ID, contact);
 

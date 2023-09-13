@@ -4,6 +4,7 @@ import Database.UserDAO;
 import Database.appointmentDAO;
 import Database.contactDAO;
 import Database.customerDAO;
+import helper.calculatehelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Appointment;
 import model.Contact;
 import model.Customer;
 import model.User;
@@ -48,11 +50,16 @@ public class AppointmentContoller{
     @FXML private Button Add_Appointment_Save_Button;
     @FXML private Button Add_Appointment_Cancel_Button;
 
+    private ObservableList<String> ContactNames;
+    private ObservableList<Contact> allContacts;
+    private ObservableList<Appointment> allAppointments;
+
     public void initialize() throws SQLException {
 
         try {
-            ObservableList<String> ContactNames = FXCollections.observableArrayList();
-            ObservableList<Contact> allContacts = contactDAO.getAllContacts();
+            ContactNames = FXCollections.observableArrayList();
+            allContacts = contactDAO.getAllContacts();
+            allAppointments = appointmentDAO.getAllAppointments();
 
             // Lambda #1
             allContacts.forEach(contact -> ContactNames.add(contact.getName() + " : " + contact.getID()));
@@ -128,16 +135,31 @@ public class AppointmentContoller{
 
                 String lastUpdate = createDate;
 
-                appointmentDAO.addAppointment(title, description, location, type, startDate, endDate,
-                createDate ,lastUpdate, Customer_ID, user_ID, contact);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/view/MainScreen.fxml"));
-                Parent root = loader.load();
-                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+                long dummy_id = 0;
+                LocalDateTime test_startDate = LocalDateTime.parse(startDate, formatter);
+                LocalDateTime test_endDate = LocalDateTime.parse(endDate, formatter);
+                long dummy_customer_ID = Long.parseLong(Customer_ID);
+                long dummy_user_ID = Long.parseLong(user_ID);
+                long dummy_contact = Long.parseLong(contact);
+
+                Appointment test = new Appointment(dummy_id, title, description, location, type, test_startDate, test_endDate, lastUpdate,
+                        dummy_customer_ID, dummy_user_ID, dummy_contact);
+
+                if(calculatehelper.conflictswithAppointments(allAppointments, test)) {
+
+                    appointmentDAO.addAppointment(title, description, location, type, startDate, endDate,
+                            createDate, lastUpdate, Customer_ID, user_ID, contact);
+
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("/view/MainScreen.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                }
 
             }
         }catch(SQLException e){
