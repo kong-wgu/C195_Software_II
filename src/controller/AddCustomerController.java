@@ -115,7 +115,29 @@ public class AddCustomerController {
     }
 
     public void country_selected(ActionEvent actionEvent) {
-        String country = Add_Customer_Country_ChoiceBox.getValue();
-        System.out.println("Item Selected: " + country);
+        String selectedcountry = Add_Customer_Country_ChoiceBox.getValue();
+        long countryid = 0; boolean found = false;
+        for(Country country : allCountries ){
+            String name = country.getName();
+            long id = country.getID();
+            if(name == selectedcountry){
+                countryid = id;
+                found = true;
+            }
+        }
+
+        if(found == true){
+            ObservableList<String> divisionList = FXCollections.observableArrayList();
+
+            for(Division div : allDivisions){
+                long divisionID = div.getCountryID();
+                if(divisionID == countryid){
+                    String state = div.getName();
+                    divisionList.add(state);
+                }
+            }
+            Add_Customer_State_ChoiceBox.setItems(divisionList);
+        }
+
     }
 }
