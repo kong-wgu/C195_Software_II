@@ -20,6 +20,8 @@ import model.Division;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -37,6 +39,8 @@ public class AddCustomerController {
 
     private ObservableList<Division> allDivisions;
     private ObservableList<Country> allCountries;
+    private long currentCountryID;
+    private long currentDivisionID;
 
 
     public void initialize() throws SQLException {
@@ -52,19 +56,37 @@ public class AddCustomerController {
             allCountries.forEach(country -> CountryList.add(country.getName()));
             Add_Customer_Country_ChoiceBox.setItems(CountryList);
 
-
-
-
         }catch(SQLException e){
             throw new SQLException("Failed to load one or more List, check DataBase Package");
         }
-
 
     }
 
 
     /** */
-    public void Add_Customer_Save_Button_Clicked(ActionEvent actionEvent) {
+    public void Add_Customer_Save_Button_Clicked(ActionEvent actionEvent) throws Exception {
+
+        if(!check_for_blanks()){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
+            Optional<ButtonType> rs = alert.showAndWait();
+        }else{
+
+            String name = Add_Customer_Name_TextField.getText();
+            String address = Add_Customer_Address_TextField.getText();
+            String phone = Add_Customer_Phone_Number_TextField.getText();
+            String country = Add_Customer_Country_ChoiceBox.getValue();
+            String state = Add_Customer_State_ChoiceBox.getValue();
+            String postalCode = Add_Customer_Postal_Code_TextField.getText();
+            long id = 0;
+
+            Customer newCustomer = new Customer(id, name, address,postalCode, phone, currentDivisionID, state);
+
+            String createDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+
+            customerDAO.addCustomer(newCustomer, createDate);
+
+        }
+
     }
 
     /** */
@@ -122,6 +144,7 @@ public class AddCustomerController {
             long id = country.getID();
             if(name == selectedcountry){
                 countryid = id;
+                currentCountryID = id;
                 found = true;
             }
         }
@@ -132,6 +155,7 @@ public class AddCustomerController {
             for(Division div : allDivisions){
                 long divisionID = div.getCountryID();
                 if(divisionID == countryid){
+                    currentDivisionID = div.getID();
                     String state = div.getName();
                     divisionList.add(state);
                 }

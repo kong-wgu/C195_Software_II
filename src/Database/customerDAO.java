@@ -52,6 +52,40 @@ public class customerDAO {
 
     }
 
+    public static void addCustomer(Customer newCustomer, String createDate) throws SQLException {
+
+        String user = User.userLoggedIn;
+        String name = newCustomer.getName();
+        String address = newCustomer.getAddress();
+        String postalCode = newCustomer.getPostalCode();
+        String phone = newCustomer.getPhone();
+        String divisionID = String.valueOf(newCustomer.getDivisionID());
+
+        try {
+            String insert = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, " +
+                    "Create_Date, Created_by, Last_Update, Last_Updated_By, Division_ID) Values(" +
+                    "?,?,?,?,?,?,?,?,?)";
+
+            PreparedStatement ps = DBConnection.getCurrentConnection().prepareStatement(insert);
+            ps.setString(1, name);
+            ps.setString(2, address);
+            ps.setString(3, postalCode);
+            ps.setString(4, phone);
+            ps.setString(5, createDate);
+            ps.setString(6, user);
+            ps.setString(7, createDate);
+            ps.setString(8, user);
+            ps.setString(9, divisionID);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new SQLException("Error Adding Customer to the database");
+        }
+    }
+
+
+
     public static boolean updateCustomer(Customer newCustomer, String lastUpdate) throws SQLException{
         ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
         customerObservableList = getAllCustomers();
