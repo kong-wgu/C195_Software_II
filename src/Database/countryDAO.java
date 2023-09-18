@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class countryDAO {
 
     public static ObservableList<Country> getAllCountries() throws SQLException{
-        String querySQL = "Select County_ID, Country from countires";
+        String querySQL = "Select Country_ID, Country from countries";
         PreparedStatement ps  = DBConnection.getCurrentConnection().prepareStatement(querySQL);
         ResultSet rs = ps.executeQuery();
 
