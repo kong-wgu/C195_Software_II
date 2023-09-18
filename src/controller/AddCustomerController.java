@@ -85,6 +85,14 @@ public class AddCustomerController {
 
             customerDAO.addCustomer(newCustomer, createDate);
 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/MainScreen.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
         }
 
     }
