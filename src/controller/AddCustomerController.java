@@ -114,7 +114,8 @@ public class AddCustomerController {
     public void Modify_Customer_Cancel_Button_Clicked(ActionEvent actionEvent) {
     }
 
-    public void country_selected(TouchEvent touchEvent) {
-        System.out.println("Item Selected!");
+    public void country_selected(ActionEvent actionEvent) {
+        String country = Add_Customer_Country_ChoiceBox.getValue();
+        System.out.println("Item Selected: " + country);
     }
 }
