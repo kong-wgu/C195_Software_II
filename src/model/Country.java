@@ -2,8 +2,8 @@ package model;
 
 public class Country {
 
-    public long id;
-    public String name;
+    private long id;
+    private String name;
 
     public Country(long id, String name){
         this.id = id;

@@ -188,7 +188,13 @@ public class MainScreenController {
 
 
 
-    public void customers_add_button_clicked(ActionEvent actionEvent) {
+    public void customers_add_button_clicked(ActionEvent actionEvent) throws Exception {
+        Parent report = FXMLLoader.load(getClass().getResource("/view/Add_Customer.fxml"));
+        Scene scene = new Scene(report);
+        Stage win = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        win.setScene(scene);
+        win.show();
+
     }
 
     public void customers_update_button_clicked(ActionEvent actionEvent) {

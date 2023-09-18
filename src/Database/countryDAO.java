@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class countryDAO {
 
-    public ObservableList<Country> getAllCountries() throws SQLException{
+    public static ObservableList<Country> getAllCountries() throws SQLException{
         String querySQL = "Select County_ID, Country from countires";
         PreparedStatement ps  = DBConnection.getCurrentConnection().prepareStatement(querySQL);
         ResultSet rs = ps.executeQuery();
