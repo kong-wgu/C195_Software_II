@@ -130,4 +130,16 @@ public class customerDAO {
         return false;
     }
 
+    public static boolean deleteCustomer(long customerID) throws SQLException{
+
+        try{
+            String querySQL = "Delete from customers WHERE Customer_ID = " + Long.toString(customerID);
+            PreparedStatement ps = DBConnection.getCurrentConnection().prepareStatement(querySQL);
+            ps.executeUpdate();
+            return true;
+        }catch(SQLException e){
+            throw new SQLException("Error deleting customer, please check database connection");
+        }
+    }
+
  }

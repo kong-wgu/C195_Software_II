@@ -18,6 +18,8 @@ import model.Appointment;
 import model.Customer;
 
 import helper.holderData;
+
+import javax.swing.tree.ExpandVetoException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -197,10 +199,58 @@ public class MainScreenController {
 
     }
 
-    public void customers_update_button_clicked(ActionEvent actionEvent) {
+    public void customers_update_button_clicked(ActionEvent actionEvent) throws Exception {
+        Customer selected = Customers_tableview.getSelectionModel().getSelectedItem();
+
+        try {
+            if(selected == null){
+                Alert alert = new Alert(Alert.AlertType.WARNING,
+                        "You did not select any Customers, Please try again!");
+                Optional<ButtonType> rs = alert.showAndWait();
+            }else {
+                long selectedID = selected.getID();
+
+                holderData.setSelected_Customer(selectedID);
+                holderData.setHolderCustomer(selected);
+
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/view/Modify_Customer.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage win = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+                win.setScene(scene);
+                win.show();
+
+            }
+        }catch (Exception e){
+            throw new Exception("Was not able to get Customer, please check for Null Customer.");
+        }
+
     }
 
-    public void customers_delete_button_clicked(ActionEvent actionEvent) {
+    public void customers_delete_button_clicked(ActionEvent actionEvent) throws Exception {
+        Customer select = Customers_tableview.getSelectionModel().getSelectedItem();
+
+        try{
+            if(select == null){
+                Alert alert = new Alert(Alert.AlertType.WARNING,
+                        "You did not select any Customer");
+                Optional<ButtonType> rs = alert.showAndWait();
+            }else{
+                long select_ID = select.getID();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                        "Are you sure you want to delete this appointment with the ID: " + select_ID );
+                Optional<ButtonType> rs = alert.showAndWait();
+                if(rs.get() == ButtonType.OK){
+                    customerDAO.deleteCustomer(select_ID);
+
+                    ObservableList<Customer> allCustomers = customerDAO.getAllCustomers();
+                    Customers_tableview.setItems(allCustomers);
+                }
+            }
+        }catch (Exception e){
+            throw new Exception("Was not able to delete Customer.");
+        }
     }
 
     public void reports_button_clicked(ActionEvent actionEvent) throws IOException {
