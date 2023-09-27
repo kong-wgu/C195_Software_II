@@ -131,7 +131,6 @@ public class ModifyAppointmentController {
     /** This function focuses on when the user clicks on the add button on the add appointment window */
     public void Modify_Appointment_Button_Clicked(ActionEvent actionEvent) throws SQLException, IOException {
 
-
         try{
             if (!check_for_Blanks()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
