@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="620.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCustomerController">
+<AnchorPane prefHeight="620.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyCustomerController">
     <children>
         <Label fx:id="Modify_Customer_Label" layoutX="171.0" layoutY="46.0" text="Modify Customer">
             <font>
@@ -26,7 +26,7 @@
         <TextField fx:id="Modify_Customer_Address_TextField" layoutX="183.0" layoutY="241.0" />
         <TextField fx:id="Modify_Customer_Phone_Number_TextField" layoutX="183.0" layoutY="309.0" />
         <TextField fx:id="Modify_Customer_Postal_Code_ChoiceBox" layoutX="183.0" layoutY="500.0" />
-        <ChoiceBox fx:id="Modify_Customer_Country_ChoiceBox" layoutX="183.0" layoutY="373.0" onTouchPressed="#country_selected" prefWidth="150.0" />
+        <ChoiceBox fx:id="Modify_Customer_Country_ChoiceBox" layoutX="183.0" layoutY="373.0" onAction="#country_selected" prefWidth="150.0" />
         <ChoiceBox fx:id="Modify_Customer_State_ChoiceBox" layoutX="183.0" layoutY="438.0" prefWidth="150.0" />
         <Button fx:id="Modify_Customer_Save_Button" layoutX="227.0" layoutY="556.0" mnemonicParsing="false" onAction="#Modify_Customer_Save_Button_Clicked" text="Save" />
         <Button fx:id="Modify_Customer_Cancel_Button" layoutX="352.0" layoutY="556.0" mnemonicParsing="false" onAction="#Modify_Customer_Cancel_Button_Clicked" text="Cancel" />
