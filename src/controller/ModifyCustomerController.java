@@ -76,7 +76,7 @@ public class ModifyCustomerController {
 
 
     /** */
-    public void Modify_Customer_Save_Button_Clicked(ActionEvent actionEvent) throws Exception {
+    public void Modify_Customer_Save_Button_Clicked(ActionEvent actionEvent) throws Exception, NullPointerException {
 
         if(!check_for_blanks()){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
@@ -90,12 +90,18 @@ public class ModifyCustomerController {
             String country = Modify_Customer_Country_ChoiceBox.getValue();
             String state = Modify_Customer_State_ChoiceBox.getValue();
             String postalCode = Modify_Customer_Postal_Code_TextField.getText();
+            String division = "";
+            try{
+                division = getDivisionID();
+            }catch(NullPointerException e){
+                throw new NullPointerException("Division ID was not Found, please check the database for accurate ID.");
+            }
 
             Customer newCustomer = new Customer(id, name, address,postalCode, phone, currentDivisionID, state);
 
             String createDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
 
-            customerDAO.updateCustomer(newCustomer, createDate);
+            customerDAO.updateCustomer(newCustomer, createDate, division);
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/MainScreen.fxml"));
@@ -207,6 +213,22 @@ public class ModifyCustomerController {
             }
         }
         return name;
+    }
+
+    public String getDivisionID() throws NullPointerException{
+        String divisionName = Modify_Customer_State_ChoiceBox.getValue();
+        ObservableList<Division> divisions = allDivisions;
+        String divisionID = null;
+
+        for (Division div : divisions) {
+            String name = div.getName();
+            if (name.equals(divisionName)) {
+                divisionID = Long.toString(div.getID());
+                return divisionID;
+            }
+        }
+
+        return divisionID;
     }
 
 }

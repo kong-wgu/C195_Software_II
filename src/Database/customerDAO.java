@@ -89,7 +89,7 @@ public class customerDAO {
 
 
 
-    public static boolean updateCustomer(Customer newCustomer, String lastUpdate) throws SQLException{
+    public static boolean updateCustomer(Customer newCustomer, String lastUpdate, String division) throws SQLException{
         long Customer_ID = newCustomer.getID();
 
 
@@ -98,7 +98,7 @@ public class customerDAO {
         String postalCode = newCustomer.getPostalCode();
         String phone = newCustomer.getPhone();
 
-        String divisionID = String.valueOf(newCustomer.getDivisionID());
+        String divisionID = division;
 
         String lastUpdatedBy = User.userLoggedIn;
 
