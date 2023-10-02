@@ -57,7 +57,7 @@
       </Pane>
       <Pane layoutX="34.0" layoutY="631.0" prefHeight="280.0" prefWidth="1083.0" style="-fx-background-color: rgb(227, 196, 152);">
          <children>
-            <TableView fx:id="Reports_Region_TableView" layoutX="14.0" layoutY="66.0" prefHeight="200.0" prefWidth="1051.0">
+            <TableView fx:id="Reports_Division_TableView" layoutX="14.0" layoutY="66.0" prefHeight="200.0" prefWidth="1051.0">
               <columns>
                 <TableColumn prefWidth="539.0" text="Division Name" />
                 <TableColumn prefWidth="511.0" text="Total Customers" />
