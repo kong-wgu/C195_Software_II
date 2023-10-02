@@ -33,6 +33,9 @@ public class customerDAO {
                 String postalCode = rs.getString("Postal_Code");
                 String phone = rs.getString("Phone");
                 long divisionID = rs.getLong("Division_ID");
+                String createdBy = rs.getString("Created_By");
+
+
 
                 for(Division division: divisionObservableList){
                     if(divisionID == division.getID()){
