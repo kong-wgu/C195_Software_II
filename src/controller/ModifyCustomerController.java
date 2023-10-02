@@ -62,6 +62,12 @@ public class ModifyCustomerController {
             Modify_Customer_Postal_Code_TextField.setText(selectedCustomer.getPostalCode());
 
 
+            String country = getCountryname(selectedCustomer.getDivisionID());
+            String division = getDivisionName(selectedCustomer.getDivisionID());
+            Modify_Customer_Country_ChoiceBox.setValue(country);
+            Modify_Customer_State_ChoiceBox.setValue(division);
+
+
         }catch(SQLException e){
             throw new SQLException("Failed to load one or more List, check DataBase Package");
         }
@@ -171,4 +177,36 @@ public class ModifyCustomerController {
         }
 
     }
+
+    public String getCountryname(long divisionID){
+        ObservableList<Division> divisions = allDivisions;
+        ObservableList<Country> countries = allCountries;
+        String countryname = "";
+
+        for(Division div : divisions){
+           if(div.getID() == divisionID){
+               long countryid = div.getCountryID();
+               for(Country country : countries){
+                   if(countryid == country.getID()){
+                       countryname = country.getName();
+                   }
+               }
+           }
+        }
+
+        return countryname;
+    }
+
+    public String getDivisionName(long divisionID){
+        ObservableList<Division> divisions = allDivisions;
+        String name = "";
+
+        for(Division div : divisions){
+            if(div.getID() == divisionID){
+                name = div.getName();
+            }
+        }
+        return name;
+    }
+
 }

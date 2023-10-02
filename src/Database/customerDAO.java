@@ -104,7 +104,7 @@ public class customerDAO {
 
         try{
             String query = "UPDATE customers SET Customer_Name=? , Address=?, Postal_Code=?, Phone=?" +
-                    ", Last_Update=?, LastUpdated_By=?, Division_ID=? Where Customer_ID=?";
+                    ", Last_Update=?, Last_Updated_By=?, Division_ID=? Where Customer_ID=?";
 
             PreparedStatement ps = DBConnection.getCurrentConnection().prepareStatement(query);
 
