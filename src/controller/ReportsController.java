@@ -27,7 +27,7 @@ public class ReportsController {
 
 
     @FXML private TableView<Appointment> Reports_User_Appointment_TableView;
-    @FXML private TableView<Division> Reports_Appointments_TableView;
+    @FXML private TableView<AppointmentReports> Reports_Appointments_TableView;
     @FXML private TableView<Division> Reports_Division_TableView;
 
 
@@ -65,7 +65,13 @@ public class ReportsController {
             User_End.setCellValueFactory(new PropertyValueFactory<>("endTime"));
             User_CustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
 
-            AppointmentReports.getAppointmentReports(allAppointments);
+            ObservableList<AppointmentReports> appReportsList = AppointmentReports.getAppointmentReports(allAppointments);
+
+            Appointments_Month.setCellValueFactory(new PropertyValueFactory<>("month"));
+            Appointments_Type.setCellValueFactory(new PropertyValueFactory<>("type"));
+            Appointments_Total.setCellValueFactory(new PropertyValueFactory<>("totalCount"));
+
+            Reports_Appointments_TableView.setItems(appReportsList);
 
 
         }catch(SQLException e){

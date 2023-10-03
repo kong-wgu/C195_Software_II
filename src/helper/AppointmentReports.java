@@ -31,11 +31,12 @@ public class AppointmentReports {
                         }else{
                             AppointmentReports newApp = new AppointmentReports(monthName, type, 1);
                             appointmentReportsList.add(newApp);
+                            break;
                         }
                     }
                 }
 
-                if(found = false){
+                if(!found){
                     AppointmentReports app = new AppointmentReports(monthName, type, 1);
                     appointmentReportsList.add(app);
                 }
