@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="934.0" prefWidth="1160.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportsController">
    <children>
       <Label fx:id="Reports_Label" layoutX="539.0" layoutY="30.0" text="Reports">
@@ -22,14 +21,14 @@
          <children>
             <TableView fx:id="Reports_User_Appointment_TableView" layoutX="14.0" layoutY="64.0" prefHeight="189.0" prefWidth="1051.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="ID" />
-                <TableColumn prefWidth="113.5" text="Title" />
-                  <TableColumn prefWidth="102.0" text="Type" />
-                  <TableColumn prefWidth="157.0" text="Description" />
-                  <TableColumn prefWidth="165.0" text="Location" />
-                  <TableColumn prefWidth="158.5" text="Start Date/Time" />
-                  <TableColumn prefWidth="159.5" text="End Date/Time" />
-                  <TableColumn prefWidth="119.5" text="Customer ID" />
+                <TableColumn fx:id="User_ID" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="User_Title" prefWidth="113.5" text="Title" />
+                  <TableColumn fx:id="User_Type" prefWidth="102.0" text="Type" />
+                  <TableColumn fx:id="User_Description" prefWidth="157.0" text="Description" />
+                  <TableColumn fx:id="User_Location" prefWidth="165.0" text="Location" />
+                  <TableColumn fx:id="User_Start" prefWidth="158.5" text="Start Date/Time" />
+                  <TableColumn fx:id="User_End" prefWidth="159.5" text="End Date/Time" />
+                  <TableColumn fx:id="User_CustomerID" prefWidth="119.5" text="Customer ID" />
               </columns>
             </TableView>
             <Label fx:id="Reports_User_Appointment_Label" layoutX="490.0" layoutY="28.0" text="User Appointments">
@@ -43,9 +42,9 @@
          <children>
             <TableView fx:id="Reports_Appointments_TableView" layoutX="14.0" layoutY="66.0" prefHeight="200.0" prefWidth="1051.0">
               <columns>
-                <TableColumn prefWidth="357.5" text="Appointment Month" />
-                <TableColumn prefWidth="308.0" text="Appointment Type" />
-                  <TableColumn prefWidth="383.5" text="Total Appointments" />
+                <TableColumn fx:id="Appointments_Month" prefWidth="357.5" text="Appointment Month" />
+                <TableColumn fx:id="Appointments_Type" prefWidth="308.0" text="Appointment Type" />
+                  <TableColumn fx:id="Appointments_Total" prefWidth="383.5" text="Total Appointments" />
               </columns>
             </TableView>
             <Label fx:id="Reports_Appointments_Label" layoutX="504.0" layoutY="27.0" text="Appointments">
@@ -59,8 +58,8 @@
          <children>
             <TableView fx:id="Reports_Division_TableView" layoutX="14.0" layoutY="66.0" prefHeight="200.0" prefWidth="1051.0">
               <columns>
-                <TableColumn prefWidth="539.0" text="Division Name" />
-                <TableColumn prefWidth="511.0" text="Total Customers" />
+                <TableColumn fx:id="Division_Name" prefWidth="539.0" text="Division Name" />
+                <TableColumn fx:id="Division_Total_Customers" prefWidth="511.0" text="Total Customers" />
               </columns>
             </TableView>
             <Label fx:id="Reports_Division_Label" layoutX="514.0" layoutY="26.0" text="Divisions">

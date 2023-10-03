@@ -40,12 +40,12 @@ public class ReportsController {
     @FXML private TableColumn<? ,?>  User_End;
     @FXML private TableColumn<? ,?>  User_CustomerID;
 
-    @FXML private TableColumn<String, String>  Appointments_Month;
+    @FXML private TableColumn<?, ?>  Appointments_Month;
     @FXML private TableColumn<? ,?>  Appointments_Type;
     @FXML private TableColumn<? ,?>  Appointments_Total;
 
-    @FXML private TableColumn<? ,?>  Divisions_Name;
-    @FXML private TableColumn<? ,?>  Divisions_Total_Customers;
+    @FXML private TableColumn<? ,?>  Division_Name;
+    @FXML private TableColumn<? ,?>  Division_Total_Customers;
 
     private ObservableList<Appointment> allAppointments;
     private ObservableList<Customer> allCustomers;
