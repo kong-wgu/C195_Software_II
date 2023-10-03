@@ -254,6 +254,7 @@ public class MainScreenController {
     }
 
     public void reports_button_clicked(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
         Parent report = FXMLLoader.load(getClass().getResource("/view/Reports.fxml"));
         Scene scene = new Scene(report);
         Stage win = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

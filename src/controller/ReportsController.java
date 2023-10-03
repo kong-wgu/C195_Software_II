@@ -26,26 +26,26 @@ import java.util.ResourceBundle;
 public class ReportsController {
 
 
-    @FXML TableView<Appointment> Reports_User_Appointment_TableView;
-    @FXML TableView<Division> Reports_Appointments_TableView;
-    @FXML TableView<Division> Reports_Division_TableView;
+    @FXML private TableView<Appointment> Reports_User_Appointment_TableView;
+    @FXML private TableView<Division> Reports_Appointments_TableView;
+    @FXML private TableView<Division> Reports_Division_TableView;
 
 
-    @FXML TableColumn<? ,?>  User_ID;
-    @FXML TableColumn<? ,?>  User_Title;
-    @FXML TableColumn<? ,?>  User_Type;
-    @FXML TableColumn<? ,?>  User_Description;
-    @FXML TableColumn<? ,?>  User_Location;
-    @FXML TableColumn<? ,?>  User_Start;
-    @FXML TableColumn<? ,?>  User_End;
-    @FXML TableColumn<? ,?>  User_CustomerID;
+    @FXML private TableColumn<? ,?>  User_ID;
+    @FXML private TableColumn<? ,?>  User_Title;
+    @FXML private TableColumn<? ,?>  User_Type;
+    @FXML private TableColumn<? ,?>  User_Description;
+    @FXML private TableColumn<? ,?>  User_Location;
+    @FXML private TableColumn<? ,?>  User_Start;
+    @FXML private TableColumn<? ,?>  User_End;
+    @FXML private TableColumn<? ,?>  User_CustomerID;
 
-    @FXML TableColumn<String, String>  Appointments_Month;
-    @FXML TableColumn<? ,?>  Appointments_Type;
-    @FXML TableColumn<? ,?>  Appointments_Total;
+    @FXML private TableColumn<String, String>  Appointments_Month;
+    @FXML private TableColumn<? ,?>  Appointments_Type;
+    @FXML private TableColumn<? ,?>  Appointments_Total;
 
-    @FXML TableColumn<? ,?>  Divisions_Name;
-    @FXML TableColumn<? ,?>  Divisions_Total_Customers;
+    @FXML private TableColumn<? ,?>  Divisions_Name;
+    @FXML private TableColumn<? ,?>  Divisions_Total_Customers;
 
     private ObservableList<Appointment> allAppointments;
     private ObservableList<Customer> allCustomers;
