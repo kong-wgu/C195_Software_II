@@ -1,5 +1,8 @@
 package controller;
 
+import Database.appointmentDAO;
+import Database.customerDAO;
+import helper.AppointmentReports;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,8 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Customer;
 import model.Division;
 
 import java.io.IOException;
@@ -18,7 +23,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ReportsController implements Initializable {
+public class ReportsController {
 
 
     @FXML TableView<Appointment> Reports_User_Appointment_TableView;
@@ -35,7 +40,7 @@ public class ReportsController implements Initializable {
     @FXML TableColumn<? ,?>  User_End;
     @FXML TableColumn<? ,?>  User_CustomerID;
 
-    @FXML TableColumn<? ,?>  Appointments_Month;
+    @FXML TableColumn<String, String>  Appointments_Month;
     @FXML TableColumn<? ,?>  Appointments_Type;
     @FXML TableColumn<? ,?>  Appointments_Total;
 
@@ -43,11 +48,25 @@ public class ReportsController implements Initializable {
     @FXML TableColumn<? ,?>  Divisions_Total_Customers;
 
     private ObservableList<Appointment> allAppointments;
-
+    private ObservableList<Customer> allCustomers;
 
     public void initialize() throws SQLException {
 
         try{
+            ObservableList<Appointment> allAppointments = appointmentDAO.getAllAppointments();
+            ObservableList<Customer> allCustomers = customerDAO.getAllCustomers();
+
+            User_ID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+            User_Title.setCellValueFactory(new PropertyValueFactory<>("title"));
+            User_Type.setCellValueFactory(new PropertyValueFactory<>("type"));
+            User_Description.setCellValueFactory(new PropertyValueFactory<>("description"));
+            User_Location.setCellValueFactory(new PropertyValueFactory<>("location"));
+            User_Start.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+            User_End.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+            User_CustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+
+            AppointmentReports.getAppointmentReports(allAppointments);
+
 
         }catch(SQLException e){
             throw new SQLException("An item was not loaded correctly from the DB");
@@ -76,4 +95,9 @@ public class ReportsController implements Initializable {
             stage.show();
         }
     }
+
+    public void intialize_all(){
+
+    }
+
 }
