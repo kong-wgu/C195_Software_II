@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
 import model.Contact;
+import model.Customer;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -13,6 +14,9 @@ public class AppointmentReports {
     private String month;
     private String type;
     private Long totalCount;
+
+    private String divisionName;
+    private Long totaldivisionCustomers;
 
 
     public static ObservableList<AppointmentReports> getAppointmentReports(ObservableList<Appointment> appointmentList) throws NullPointerException{
@@ -29,7 +33,7 @@ public class AppointmentReports {
                         if(type.equals(app.getType())){
                             app.updateCount(1);
                         }else{
-                            AppointmentReports newApp = new AppointmentReports(monthName, type, 1);
+                            AppointmentReports newApp = new AppointmentReports(monthName, type, 1, null, 0);
                             appointmentReportsList.add(newApp);
                             break;
                         }
@@ -37,10 +41,9 @@ public class AppointmentReports {
                 }
 
                 if(!found){
-                    AppointmentReports app = new AppointmentReports(monthName, type, 1);
+                    AppointmentReports app = new AppointmentReports(monthName, type, 1,null, 0);
                     appointmentReportsList.add(app);
                 }
-
 
             }
 
@@ -53,14 +56,48 @@ public class AppointmentReports {
     }
 
 
-    public AppointmentReports(String month, String type, long count){
+    public static ObservableList<AppointmentReports> getDivisionReports(ObservableList<Customer> customerList) throws NullPointerException{
+        ObservableList<AppointmentReports> appointmentReportsList = FXCollections.observableArrayList();
+
+        try{
+            for(Customer customer: customerList){
+                String divisionName = customer.getDivisionName();
+                boolean found = false;
+                for(AppointmentReports app: appointmentReportsList){
+                    if(divisionName.equals(app.getDivisionName())){
+                        found = true;
+                        app.updateDivisionCount();;
+                    }
+                }
+
+                if(!found){
+                    AppointmentReports app = new AppointmentReports("", "", 0, divisionName, 1);
+                }
+            }
+
+            return appointmentReportsList;
+
+        }catch(NullPointerException e){
+            throw new NullPointerException("THere is a Null Customer within the List.");
+        }
+
+    }
+
+
+    public AppointmentReports(String month, String type, long count, String divisionName, long divisionCount){
         this.month = month;
         this.type = type;
         this.totalCount = count;
+        if(divisionName != null){this.divisionName = divisionName;}
+        if(divisionCount > 0){this.totaldivisionCustomers += divisionCount;} else{this.totaldivisionCustomers = divisionCount;}
     }
 
     public void updateCount(long num){this.totalCount = this.totalCount + num;}
 
+    public void updateDivisionCount(){this.totaldivisionCustomers += 1;}
+
+
+    public String getDivisionName(){return this.divisionName;}
     public String getMonth(){return this.month;}
     public String getType(){return this.type;}
     public long getTotalCount(){return this.totalCount;}

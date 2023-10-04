@@ -3,6 +3,7 @@ package controller;
 import Database.appointmentDAO;
 import Database.customerDAO;
 import helper.AppointmentReports;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,8 +29,9 @@ public class ReportsController {
 
     @FXML private TableView<Appointment> Reports_User_Appointment_TableView;
     @FXML private TableView<AppointmentReports> Reports_Appointments_TableView;
-    @FXML private TableView<Division> Reports_Division_TableView;
+    @FXML private TableView<AppointmentReports> Reports_Division_TableView;
 
+    @FXML private ChoiceBox<String> Reports_User_ChoiceBox;
 
     @FXML private TableColumn<? ,?>  User_ID;
     @FXML private TableColumn<? ,?>  User_Title;
@@ -55,6 +57,9 @@ public class ReportsController {
         try{
             ObservableList<Appointment> allAppointments = appointmentDAO.getAllAppointments();
             ObservableList<Customer> allCustomers = customerDAO.getAllCustomers();
+            ObservableList<String> allCustomersList = FXCollections.observableArrayList();
+
+            allCustomers.forEach(customer -> allCustomersList.add(customer.getName() + " - " + Long.toString(customer.getID())));
 
             User_ID.setCellValueFactory(new PropertyValueFactory<>("ID"));
             User_Title.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -65,13 +70,22 @@ public class ReportsController {
             User_End.setCellValueFactory(new PropertyValueFactory<>("endTime"));
             User_CustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
 
+
             ObservableList<AppointmentReports> appReportsList = AppointmentReports.getAppointmentReports(allAppointments);
 
             Appointments_Month.setCellValueFactory(new PropertyValueFactory<>("month"));
             Appointments_Type.setCellValueFactory(new PropertyValueFactory<>("type"));
             Appointments_Total.setCellValueFactory(new PropertyValueFactory<>("totalCount"));
 
+            ObservableList<AppointmentReports> divisionReportList = AppointmentReports.getDivisionReports(allCustomers);
+
+            Division_Name.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+            Division_Total_Customers.setCellValueFactory(new PropertyValueFactory<>("totaldivisionCustomers"));
+
             Reports_Appointments_TableView.setItems(appReportsList);
+            Reports_Division_TableView.setItems(divisionReportList);
+            Reports_User_ChoiceBox.setItems(allCustomersList);
+
 
 
         }catch(SQLException e){
@@ -102,8 +116,9 @@ public class ReportsController {
         }
     }
 
-    public void intialize_all(){
+
+    public void user_selected(ActionEvent actionEvent) {
+
 
     }
-
 }
