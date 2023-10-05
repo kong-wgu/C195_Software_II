@@ -74,7 +74,6 @@ public class ModifyCustomerController {
 
     }
 
-
     /** */
     public void Modify_Customer_Save_Button_Clicked(ActionEvent actionEvent) throws Exception, NullPointerException {
 
@@ -90,7 +89,8 @@ public class ModifyCustomerController {
             String country = Modify_Customer_Country_ChoiceBox.getValue();
             String state = Modify_Customer_State_ChoiceBox.getValue();
             String postalCode = Modify_Customer_Postal_Code_TextField.getText();
-            String division = "";
+            String division = Long.toString(currentDivisionID);
+
             try{
                 division = getDivisionID();
             }catch(NullPointerException e){
@@ -146,6 +146,7 @@ public class ModifyCustomerController {
                 return false;
             }
 
+            currentDivisionID = Long.parseLong(getDivisionID());
             return true;
 
         }catch (Exception e){
@@ -168,7 +169,7 @@ public class ModifyCustomerController {
             }
         }
 
-        if(found == true){
+        if(found){
             ObservableList<String> divisionList = FXCollections.observableArrayList();
 
             for(Division div : allDivisions){
