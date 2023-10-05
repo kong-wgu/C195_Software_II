@@ -128,20 +128,13 @@ public class AddCustomerController {
                 return false;
             }
 
+            currentDivisionID = Long.parseLong(Add_Customer_State_ChoiceBox.getValue());
             return true;
 
         }catch (Exception e){
             throw new Exception("One of the textfield is empty");
         }
 
-    }
-
-    /** */
-    public void Modify_Customer_Save_Button_Clicked(ActionEvent actionEvent) {
-    }
-
-    /** */
-    public void Modify_Customer_Cancel_Button_Clicked(ActionEvent actionEvent) {
     }
 
     public void country_selected(ActionEvent actionEvent) {
@@ -157,7 +150,7 @@ public class AddCustomerController {
             }
         }
 
-        if(found == true){
+        if(found){
             ObservableList<String> divisionList = FXCollections.observableArrayList();
 
             for(Division div : allDivisions){
