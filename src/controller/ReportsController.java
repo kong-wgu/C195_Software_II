@@ -55,8 +55,8 @@ public class ReportsController {
     public void initialize() throws SQLException {
 
         try{
-            ObservableList<Appointment> allAppointments = appointmentDAO.getAllAppointments();
-            ObservableList<Customer> allCustomers = customerDAO.getAllCustomers();
+            allAppointments = appointmentDAO.getAllAppointments();
+            allCustomers = customerDAO.getAllCustomers();
             ObservableList<String> allCustomersList = FXCollections.observableArrayList();
 
             allCustomers.forEach(customer -> allCustomersList.add(customer.getName() + " - " + Long.toString(customer.getID())));
