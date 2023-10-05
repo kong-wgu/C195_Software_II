@@ -13,10 +13,10 @@ public class AppointmentReports {
 
     private String month;
     private String type;
-    private Long totalCount;
+    private long totalCount;
 
     private String divisionName;
-    private Long totaldivisionCustomers;
+    private long totaldivisionCustomers;
 
 
     public static ObservableList<AppointmentReports> getAppointmentReports(ObservableList<Appointment> appointmentList) throws NullPointerException{
@@ -67,11 +67,13 @@ public class AppointmentReports {
                     if(divisionName.equals(app.getDivisionName())){
                         found = true;
                         app.updateDivisionCount();;
+                        break;
                     }
                 }
 
                 if(!found){
                     AppointmentReports app = new AppointmentReports("", "", 0, divisionName, 1);
+                    appointmentReportsList.add(app);
                 }
             }
 
@@ -89,7 +91,7 @@ public class AppointmentReports {
         this.type = type;
         this.totalCount = count;
         if(divisionName != null){this.divisionName = divisionName;}
-        if(divisionCount > 0){this.totaldivisionCustomers += divisionCount;} else{this.totaldivisionCustomers = divisionCount;}
+        this.totaldivisionCustomers = divisionCount;
     }
 
     public void updateCount(long num){this.totalCount = this.totalCount + num;}
