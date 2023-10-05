@@ -96,12 +96,13 @@ public class AppointmentReports {
 
     public void updateCount(long num){this.totalCount = this.totalCount + num;}
 
-    public void updateDivisionCount(){this.totaldivisionCustomers += 1;}
+    public void updateDivisionCount(){this.totaldivisionCustomers = this.totaldivisionCustomers + 1;}
 
 
     public String getDivisionName(){return this.divisionName;}
     public String getMonth(){return this.month;}
     public String getType(){return this.type;}
     public long getTotalCount(){return this.totalCount;}
+    public long getTotaldivisionCustomers(){return this.totaldivisionCustomers;}
 
 }

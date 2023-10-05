@@ -128,7 +128,7 @@ public class AddCustomerController {
                 return false;
             }
 
-            currentDivisionID = Long.parseLong(Add_Customer_State_ChoiceBox.getValue());
+            currentDivisionID = Long.parseLong(getDivisionID());
             return true;
 
         }catch (Exception e){
@@ -164,5 +164,21 @@ public class AddCustomerController {
             Add_Customer_State_ChoiceBox.setItems(divisionList);
         }
 
+    }
+
+    public String getDivisionID() throws NullPointerException{
+        String divisionName = Add_Customer_State_ChoiceBox.getValue();
+        ObservableList<Division> divisions = allDivisions;
+        String divisionID = null;
+
+        for (Division div : divisions) {
+            String name = div.getName();
+            if (name.equals(divisionName)) {
+                divisionID = Long.toString(div.getID());
+                return divisionID;
+            }
+        }
+
+        return divisionID;
     }
 }
