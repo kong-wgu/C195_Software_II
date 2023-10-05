@@ -117,6 +117,34 @@ public class ReportsController {
 
 
     public void user_selected(ActionEvent actionEvent) {
+        String selectedUserID = Reports_User_ChoiceBox.getValue();
+
+        int lastIndent = selectedUserID.lastIndexOf(" ");
+        lastIndent = lastIndent + 1;
+        selectedUserID = selectedUserID.substring(lastIndent);
+
+        long selectedID = Long.parseLong(selectedUserID);
+        boolean found = false;
+
+
+        for(Customer customer: allCustomers){
+            long id = customer.getID();
+
+            if(id == selectedID){
+                ObservableList<Appointment> customerAppointments = FXCollections.observableArrayList();
+
+                for(Appointment app: allAppointments){
+                    long userappID = app.getUserID();
+                    if(userappID == id){
+                        customerAppointments.add(app);
+                    }
+                }
+
+                Reports_User_Appointment_TableView.setItems(customerAppointments);
+
+                break;
+            }
+        }
 
 
     }
