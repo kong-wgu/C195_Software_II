@@ -92,7 +92,6 @@ public class ReportsController {
             throw new SQLException("An item was not loaded correctly from the DB");
         }
 
-
     }
 
 
