@@ -21,6 +21,7 @@ public class holderData {
     public static long getSelected_Appointment(){return selected_Appointment;}
     public static Appointment getHolderAppointment(){return holderAppointment;}
 
+
     public static void setSelected_Customer(long num) throws SQLException {
 
         ObservableList<Customer> allCustomers = customerDAO.getAllCustomers();

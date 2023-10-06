@@ -1,6 +1,7 @@
 package controller;
 
 import Database.appointmentDAO;
+import Database.contactDAO;
 import Database.customerDAO;
 import helper.AppointmentReports;
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Contact;
 import model.Customer;
 import model.Division;
 
@@ -51,15 +53,18 @@ public class ReportsController {
 
     private ObservableList<Appointment> allAppointments;
     private ObservableList<Customer> allCustomers;
+    private ObservableList<Contact> allContacts;
 
     public void initialize() throws SQLException {
 
         try{
             allAppointments = appointmentDAO.getAllAppointments();
             allCustomers = customerDAO.getAllCustomers();
-            ObservableList<String> allCustomersList = FXCollections.observableArrayList();
+            allContacts = contactDAO.getAllContacts();
+            ObservableList<String> allContactList = FXCollections.observableArrayList();
 
-            allCustomers.forEach(customer -> allCustomersList.add(customer.getName() + " - " + Long.toString(customer.getID())));
+
+            allContacts.forEach(contact -> allContactList.add(contact.getName() + " - " + Long.toString(contact.getID())));
 
             User_ID.setCellValueFactory(new PropertyValueFactory<>("ID"));
             User_Title.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -84,7 +89,7 @@ public class ReportsController {
 
             Reports_Appointments_TableView.setItems(appReportsList);
             Reports_Division_TableView.setItems(divisionReportList);
-            Reports_User_ChoiceBox.setItems(allCustomersList);
+            Reports_User_ChoiceBox.setItems(allContactList);
 
 
 
@@ -127,20 +132,20 @@ public class ReportsController {
         boolean found = false;
 
 
-        for(Customer customer: allCustomers){
-            long id = customer.getID();
+        for(Contact contact: allContacts){
+            long id = contact.getID();
 
             if(id == selectedID){
-                ObservableList<Appointment> customerAppointments = FXCollections.observableArrayList();
+                ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
 
                 for(Appointment app: allAppointments){
-                    long userappID = app.getUserID();
+                    long userappID = app.getContactID();
                     if(userappID == id){
-                        customerAppointments.add(app);
+                        contactAppointments.add(app);
                     }
                 }
 
-                Reports_User_Appointment_TableView.setItems(customerAppointments);
+                Reports_User_Appointment_TableView.setItems(contactAppointments);
 
                 break;
             }

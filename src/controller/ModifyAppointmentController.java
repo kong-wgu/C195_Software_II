@@ -86,10 +86,12 @@ public class ModifyAppointmentController {
                     Modify_Appointment_Title_TextField.setText(app.getTitle());
                     Modify_Appointment_Description_TextField.setText(app.getDescription());
                     Modify_Appointment_User_ID_ChoiceBox.setValue( Long.toString(app.getUserID()));
+                    Appointment selectedapp = holderData.getHolderAppointment();
+
 
                     for(Customer customer : allCustomers){
                         long customerid = customer.getID();
-                        if (app.getCustomerID() == customerid){
+                        if (selectedapp.getCustomerID() == customerid){
                             String customerName = customer.getName();
                             String name = customerName + " : " + Long.toString(customerid);
                             Modify_Appointment_Customer_ID_ChoiceBox.setValue(name);
@@ -99,7 +101,7 @@ public class ModifyAppointmentController {
 
                     for(Contact contact : allContacts){
                         long contactID = contact.getID();
-                        if(app.getCustomerID() == contactID){
+                        if(selectedapp.getContactID() == contactID){
                             String contactName = contact.getName();
                             String name = contactName + " : " + Long.toString(contactID);
                             Modify_Appointment_Contact_ChoiceBox.setValue(name);
@@ -115,7 +117,7 @@ public class ModifyAppointmentController {
                     Modify_Appointment_End_Time_ChoiceBox.setValue(app.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
                     Modify_Appointment_Location_TextField.setText(app.getLocation());
                     Modify_Appointment_Type_TextField.setText(app.getType());
-                    holderData.setHolderAppointment(app);
+
                     break;
                 }
             }

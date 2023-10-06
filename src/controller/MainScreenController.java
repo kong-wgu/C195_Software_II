@@ -126,6 +126,7 @@ public class MainScreenController {
                 long selectID = select.getID();
 
                 holderData.setSelected_Appointment(selectID);
+                holderData.setHolderAppointment(select);
 
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/view/Modify_Appointment.fxml"));
