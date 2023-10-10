@@ -29,8 +29,8 @@
                         <TableColumn fx:id="Appointment_UserID" minWidth="0.0" prefWidth="90.0" text="User_ID" />
                     </columns>
                   </TableView>
-                  <RadioButton fx:id="Appointment_weekly_radiobutton" layoutX="30.0" layoutY="33.0" mnemonicParsing="false" onAction="#appointment_weekly_radioButton_clicked" text="Weekly" />
-                  <RadioButton fx:id="Appointment_monthly_radiobutton" layoutX="132.0" layoutY="33.0" mnemonicParsing="false" onAction="#appointment_monthly_radioButton_clicked" text="Monthly" />
+                  <RadioButton fx:id="Appointment_weekly_radiobutton" layoutX="30.0" layoutY="33.0" mnemonicParsing="false" onAction="#appointment_weekly_radioButton_clicked" text="Current Week" />
+                  <RadioButton fx:id="Appointment_monthly_radiobutton" layoutX="132.0" layoutY="33.0" mnemonicParsing="false" onAction="#appointment_monthly_radioButton_clicked" text="Current Month" />
                   <Label fx:id="Appointment_appointment_label" layoutX="519.0" layoutY="13.0" text="Appointments">
                      <font>
                         <Font name="System Bold" size="28.0" />
