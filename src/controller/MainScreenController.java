@@ -19,10 +19,12 @@ import model.Customer;
 
 import helper.holderData;
 
+import javax.print.attribute.standard.JobStateReason;
 import javax.swing.tree.ExpandVetoException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Month;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
@@ -63,14 +65,14 @@ public class MainScreenController {
     @FXML private Button MainScreen_reports_button;
     @FXML private Button MainScreen_logout_button;
 
-
+    private ObservableList<Appointment> allAppointments;
 
     public void initialize() throws SQLException {
 
         System.out.println("Main Screen Loaded");
 
         try {
-            ObservableList<Appointment> allAppointments = appointmentDAO.getAllAppointments();
+            allAppointments = appointmentDAO.getAllAppointments();
 
             Appointment_ID.setCellValueFactory(new PropertyValueFactory<>("ID")); ;
             Appointment_Title.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -175,12 +177,31 @@ public class MainScreenController {
         Appointment_monthly_radiobutton.selectedProperty().set(false);
 
 
+
+
     }
 
     public void appointment_monthly_radioButton_clicked(ActionEvent actionEvent) {
         Appointment_all_appointment_radiobutton.selectedProperty().set(false);
         Appointment_weekly_radiobutton.selectedProperty().set(false);
 
+        ObservableList<Appointment> collectedAppMonths = null;
+        ObservableList<Month> collectedMonths = null;
+
+        for(Appointment app : allAppointments){
+            boolean found = false;
+            Month appMonth = app.getStartTime().getMonth();
+            if(collectedMonths.contains(appMonth)){
+                collectedAppMonths.add(app);
+
+            }
+
+            if(false){
+
+                collectedMonths.add(appMonth);
+                collectedAppMonths.add(app);
+            }
+        }
 
     }
 
