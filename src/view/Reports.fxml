@@ -16,7 +16,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="Reports_User_ChoiceBox" layoutX="94.0" layoutY="43.0" onAction="#user_selected" prefWidth="150.0" />
+      <ChoiceBox fx:id="Reports_User_ChoiceBox" layoutX="112.0" layoutY="43.0" onAction="#user_selected" prefWidth="150.0" />
       <Pane layoutX="34.0" layoutY="84.0" prefHeight="267.0" prefWidth="1083.0" style="-fx-background-color: rgb(139, 175, 232);">
          <children>
             <TableView fx:id="Reports_User_Appointment_TableView" layoutX="14.0" layoutY="64.0" prefHeight="189.0" prefWidth="1051.0">
