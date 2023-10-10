@@ -3,6 +3,7 @@ package controller;
 import Database.appointmentDAO;
 import Database.customerDAO;
 import com.sun.nio.file.ExtendedWatchEventModifier;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,7 +25,10 @@ import javax.swing.tree.ExpandVetoException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
@@ -176,7 +180,24 @@ public class MainScreenController {
         Appointment_all_appointment_radiobutton.selectedProperty().set(false);
         Appointment_monthly_radiobutton.selectedProperty().set(false);
 
+        ObservableList<Appointment> collectedAppMonths = FXCollections.observableArrayList();
 
+        String currentWeek = LocalDate.now().getDayOfWeek().toString();
+
+        System.out.println(currentWeek);
+
+        for(Appointment app: allAppointments){
+            String appMonth = app.getStartTime().getMonth().toString();
+            String appDayWeek = app.getStartTime().getDayOfWeek().toString();
+            String appNumDay = Integer.toString(app.getStartTime().getDayOfMonth());
+            String appDayYear =Integer.toString(app.getStartTime().getDayOfYear());
+
+
+            System.out.println("Month: " + appMonth);
+            System.out.println("Day of Week: " + appDayWeek);
+            System.out.println("Number of days: " + appNumDay);
+            System.out.println("Day to Year: " + appDayYear + "\n\n");
+        }
 
 
     }
@@ -185,29 +206,27 @@ public class MainScreenController {
         Appointment_all_appointment_radiobutton.selectedProperty().set(false);
         Appointment_weekly_radiobutton.selectedProperty().set(false);
 
-        ObservableList<Appointment> collectedAppMonths = null;
-        ObservableList<Month> collectedMonths = null;
+        ObservableList<Appointment> collectedAppMonths = FXCollections.observableArrayList();
+
+        String currentMonth = LocalDate.now().getMonth().toString();
 
         for(Appointment app : allAppointments){
-            boolean found = false;
-            Month appMonth = app.getStartTime().getMonth();
-            if(collectedMonths.contains(appMonth)){
-                collectedAppMonths.add(app);
-
-            }
-
-            if(false){
-
-                collectedMonths.add(appMonth);
+            String appMonth = app.getStartTime().getMonth().toString();
+            if(currentMonth.equals(appMonth)){
                 collectedAppMonths.add(app);
             }
         }
+
+        Appointment_tableview.setItems(collectedAppMonths);
 
     }
 
     public void appointment_allAppointment_radioButton_selected(ActionEvent actionEvent) {
         Appointment_weekly_radiobutton.selectedProperty().set(false);
         Appointment_monthly_radiobutton.selectedProperty().set(false);
+
+        Appointment_tableview.setItems(allAppointments);
+
     }
 
 
