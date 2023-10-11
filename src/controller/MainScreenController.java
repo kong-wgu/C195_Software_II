@@ -3,6 +3,7 @@ package controller;
 import Database.appointmentDAO;
 import Database.customerDAO;
 import com.sun.nio.file.ExtendedWatchEventModifier;
+import helper.calculatehelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -182,7 +183,8 @@ public class MainScreenController {
 
         ObservableList<Appointment> collectedAppMonths = FXCollections.observableArrayList();
 
-        String currentWeek = LocalDate.now().getDayOfWeek().toString();
+        String currentWeek = LocalDateTime.now().getDayOfWeek().toString();
+        int monthDay = LocalDateTime.now().getDayOfMonth();
 
         System.out.println(currentWeek);
 
@@ -198,6 +200,8 @@ public class MainScreenController {
             System.out.println("Number of days: " + appNumDay);
             System.out.println("Day to Year: " + appDayYear + "\n\n");
         }
+
+        ObservableList<Integer> weeklist = calculatehelper.weekListing(currentWeek, monthDay);
 
 
     }

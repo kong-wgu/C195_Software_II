@@ -9,6 +9,7 @@ import model.Appointment;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 public class calculatehelper {
@@ -58,6 +59,106 @@ public class calculatehelper {
         }
 
         return true;
+    }
+
+    public ObservableList<Appointment> getCurrentWeek(ObservableList<Appointment> allAppointments){
+        ObservableList<Appointment> currentWeek = FXCollections.observableArrayList();
+
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        String currentMonth = currentTime.getMonth().toString();
+        String currentDayWeek = currentTime.getDayOfWeek().toString();
+        int currentDayMonth = currentTime.getDayOfMonth();
+
+        ObservableList<Integer> week = weekListing(currentDayWeek, currentDayMonth);
+
+
+        for(Appointment app : allAppointments){
+
+        }
+
+
+        return currentWeek;
+
+    }
+
+    public static ObservableList<Integer> weekListing(String DayWeek, int DayMonth){
+        ObservableList<Integer> week = FXCollections.observableArrayList();
+
+        int backward = 0;
+        int forward = 0;
+        int place = 0;
+
+        if(DayWeek.equals("SUNDAY")){
+            forward = 6;
+        }else if(DayWeek.equals("MONDAY")){
+            forward = 5;
+            backward = 1;
+            place = 1;
+        }else if(DayWeek.equals("TUESDAY")){
+            forward = 4;
+            backward = 2;
+            place = 2;
+        }else if(DayWeek.equals("WEDNESDAY")){
+            forward = 3;
+            backward = 3;
+            place = 3;
+        }else if(DayWeek.equals("THURSDAY")){
+            forward = 2;
+            backward = 4;
+            place = 4;
+        }else if(DayWeek.equals("FRIDAY")){
+            forward = 1;
+            backward = 5;
+            place = 5;
+        }else if(DayWeek.equals("SATURDAY")){
+            backward = 6;
+            place = 6;;
+        }
+
+        int holder = DayMonth;
+
+        if(backward == 0){
+
+            for(int i = 0; i < forward; i ++){
+                if(i == place){
+                    week.add(DayMonth);
+                    holder += 1;
+                }else{
+                    week.add(holder);
+                    holder +=1;
+                }
+            }
+        }else if(forward ==0){
+            for(int i = 6; i > backward; i --){
+                if(i == place){
+                    week.add(DayMonth);
+                    holder -= 1;
+                }else{
+                    week.add(holder);
+                    holder -=1;
+                }
+            }
+        }else{
+
+            for(int i = 0; i< backward; i ++){
+                holder -= 1;
+                week.add(holder);
+            }
+            holder=DayMonth;
+            for(int i = 0; i < forward; i ++){
+                holder += 1;
+                week.add(holder);
+            }
+
+            week.forEach(integer -> System.out.println(integer));
+
+            week.sorted();
+            week.forEach(integer -> System.out.println(integer));
+        }
+
+        return week;
+
     }
 
 }
