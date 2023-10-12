@@ -146,15 +146,13 @@ public class calculatehelper {
                 week.add(holder);
             }
             holder=DayMonth;
+            week.add(holder);
             for(int i = 0; i < forward; i ++){
                 holder += 1;
                 week.add(holder);
             }
 
-            week.forEach(integer -> System.out.println(integer));
-
-            week.sorted();
-            week.forEach(integer -> System.out.println(integer));
+            week = week.sorted();
         }
 
         return week;
