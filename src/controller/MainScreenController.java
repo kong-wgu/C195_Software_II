@@ -183,27 +183,25 @@ public class MainScreenController {
 
         ObservableList<Appointment> collectedAppMonths = FXCollections.observableArrayList();
 
+        String currentMonth = LocalDateTime.now().getMonth().toString();
         String currentWeek = LocalDateTime.now().getDayOfWeek().toString();
         int monthDay = LocalDateTime.now().getDayOfMonth();
 
-        System.out.println(currentWeek);
+        ObservableList<Integer> weeklist = calculatehelper.weekListing(currentWeek, monthDay);
 
         for(Appointment app: allAppointments){
             String appMonth = app.getStartTime().getMonth().toString();
             String appDayWeek = app.getStartTime().getDayOfWeek().toString();
-            String appNumDay = Integer.toString(app.getStartTime().getDayOfMonth());
-            String appDayYear =Integer.toString(app.getStartTime().getDayOfYear());
+            int appNumDay = app.getStartTime().getDayOfMonth();
 
-
-            System.out.println("Month: " + appMonth);
-            System.out.println("Day of Week: " + appDayWeek);
-            System.out.println("Number of days: " + appNumDay);
-            System.out.println("Day to Year: " + appDayYear + "\n\n");
+            if (currentMonth.equals(appMonth)){
+                if(weeklist.contains(appNumDay)){
+                    collectedAppMonths.add(app);
+                }
+            }
         }
 
-        ObservableList<Integer> weeklist = calculatehelper.weekListing(currentWeek, monthDay);
-
-
+        Appointment_tableview.setItems(collectedAppMonths);
 
     }
 
