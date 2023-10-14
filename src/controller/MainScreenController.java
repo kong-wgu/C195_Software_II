@@ -107,8 +107,6 @@ public class MainScreenController {
             throw new SQLException("Could not Load Appointments from DB.");
         }
 
-
-
     }
 
     public void appointment_add_button_clicked(ActionEvent actionEvent) throws Exception{
@@ -144,10 +142,8 @@ public class MainScreenController {
                 win.show();
             }
         }catch (Exception e){
-            throw new Exception("Was not able to delete appointment.");
+            throw new Exception("Was not able to modify appointment.");
         }
-
-
 
     }
 

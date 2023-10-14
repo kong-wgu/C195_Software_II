@@ -77,10 +77,24 @@ public class calculatehelper {
 
         }
 
-
         return currentWeek;
 
     }
+
+    public static boolean check_for_same_app_times(Appointment oldAppointment, Appointment newAppointment){
+        LocalDateTime oldAppStart_time = oldAppointment.getStartTime();
+        LocalDateTime newAppStart_time = newAppointment.getStartTime();
+
+        LocalDateTime oldAppEnd_time = oldAppointment.getEndTime();
+        LocalDateTime newAppEnd_time = newAppointment.getEndTime();
+
+        if( ((oldAppEnd_time.isEqual(newAppEnd_time)) && (oldAppStart_time.isEqual(newAppStart_time))) && (oldAppointment.getID() == newAppointment.getID())){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
     public static ObservableList<Integer> weekListing(String DayWeek, int DayMonth){
         ObservableList<Integer> week = FXCollections.observableArrayList();

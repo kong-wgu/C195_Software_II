@@ -228,7 +228,6 @@ public class ModifyCustomerController {
                 return divisionID;
             }
         }
-
         return divisionID;
     }
 

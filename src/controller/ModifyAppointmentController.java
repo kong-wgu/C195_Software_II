@@ -122,8 +122,6 @@ public class ModifyAppointmentController {
                 }
             }
 
-
-
         }catch (SQLException e){
             throw new SQLException("Error Loading Data list, check DBConnection.");
         }
