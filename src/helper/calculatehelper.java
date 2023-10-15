@@ -21,15 +21,20 @@ public class calculatehelper {
 
         LocalDateTime desiredStart = holder.getStartTime();
         LocalDateTime desiredEnd = holder.getEndTime();
-        Appointment app;
         ObservableList<Appointment> appointmentObservableList = FXCollections.observableArrayList();
         appointmentObservableList = allAppointments;
 
-        for (Appointment appointment : appointmentObservableList) {
-            app = appointment;
+
+        for (Appointment app : appointmentObservableList) {
             LocalDate appDate = app.getStartTime().toLocalDate();
             LocalDateTime start = app.getStartTime();
             LocalDateTime end = app.getEndTime();
+
+            if(app.getID() == desiredAppointment.getID()){
+                if(check_for_same_app_times(app, desiredStart, desiredEnd)){
+                    return true;
+                }
+            }
 
             if(appDate.isEqual(desiredDate)) {
 
@@ -61,7 +66,7 @@ public class calculatehelper {
         return true;
     }
 
-    public ObservableList<Appointment> getCurrentWeek(ObservableList<Appointment> allAppointments){
+    public ObservableList<Appointment> getCurrentWeekAppointments(ObservableList<Appointment> allAppointments){
         ObservableList<Appointment> currentWeek = FXCollections.observableArrayList();
 
         LocalDateTime currentTime = LocalDateTime.now();
@@ -72,8 +77,12 @@ public class calculatehelper {
 
         ObservableList<Integer> week = weekListing(currentDayWeek, currentDayMonth);
 
-
         for(Appointment app : allAppointments){
+            String appMonth = app.getStartTime().getMonth().toString();
+            int appMonthDay = app.getStartTime().getDayOfMonth();
+            if(week.contains(appMonthDay)){
+                currentWeek.add(app);
+            }
 
         }
 
@@ -81,14 +90,15 @@ public class calculatehelper {
 
     }
 
-    public static boolean check_for_same_app_times(Appointment oldAppointment, Appointment newAppointment){
+    public static boolean check_for_same_app_times(Appointment oldAppointment, LocalDateTime newStartTime, LocalDateTime newEndTime){
         LocalDateTime oldAppStart_time = oldAppointment.getStartTime();
-        LocalDateTime newAppStart_time = newAppointment.getStartTime();
+        LocalDateTime newAppStart_time = newStartTime;
+
 
         LocalDateTime oldAppEnd_time = oldAppointment.getEndTime();
-        LocalDateTime newAppEnd_time = newAppointment.getEndTime();
+        LocalDateTime newAppEnd_time = newEndTime;
 
-        if( ((oldAppEnd_time.isEqual(newAppEnd_time)) && (oldAppStart_time.isEqual(newAppStart_time))) && (oldAppointment.getID() == newAppointment.getID())){
+        if(((oldAppEnd_time.isEqual(newAppEnd_time)) && (oldAppStart_time.isEqual(newAppStart_time)))){
             return true;
         }else{
             return false;

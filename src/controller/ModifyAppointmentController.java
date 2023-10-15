@@ -149,6 +149,8 @@ public class ModifyAppointmentController {
 
                 String Customer_ID = Modify_Appointment_Customer_ID_ChoiceBox.getValue();
 
+
+
                 int lastIndent = Customer_ID.lastIndexOf(" ");
                 lastIndent = lastIndent + 1;
                 Customer_ID = Customer_ID.substring(lastIndent);
@@ -181,10 +183,11 @@ public class ModifyAppointmentController {
                 long dummy_user_ID = Long.parseLong(user_ID);
                 long dummy_contact = Long.parseLong(contact);
 
+
                 Appointment test = new Appointment(dummy_id, title, description, location, type, test_startDate, test_endDate, lastUpdate,
                         dummy_customer_ID, dummy_user_ID, dummy_contact);
 
-                if(calculatehelper.conflictswithAppointments(allAppointments, test) == true) {
+                if(calculatehelper.conflictswithAppointments(allAppointments, test)) {
                     appointmentDAO.modifyAppointment(id, title, description, location, type, startDate,
                             endDate, lastUpdate, Customer_ID, user_ID, contact);
 
@@ -266,6 +269,7 @@ public class ModifyAppointmentController {
         LocalTime time_end = LocalTime.parse(end_time);
 
         boolean check = false;
+
 
         if(start_day.isAfter(end_day) || end_day.isBefore(start_day) || end_day.isAfter(start_day)) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Your Appointment Dates must be within the same Day!");
