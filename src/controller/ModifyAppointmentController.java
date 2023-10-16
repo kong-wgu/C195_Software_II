@@ -176,7 +176,7 @@ public class ModifyAppointmentController {
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                long dummy_id = 0;
+                long dummy_id = Long.parseLong(id);
                 LocalDateTime test_startDate = LocalDateTime.parse(startDate, formatter);
                 LocalDateTime test_endDate = LocalDateTime.parse(endDate, formatter);
                 long dummy_customer_ID = Long.parseLong(Customer_ID);
