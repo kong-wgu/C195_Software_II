@@ -235,7 +235,11 @@ public class AppointmentContoller{
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Times cannot have End Time before Start Time\n \nOr\n\nTimes Cannot have Start Time after End Time! ");
             Optional<ButtonType> rs = alert.showAndWait();
             return check;
-        }else if(start_day.isEqual(end_day) && (time_start.isBefore(time_end) && time_end.isAfter(time_start))){
+        }else if(start_day.isEqual(end_day) && (time_start.equals(time_end))){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Cannot have Start Time same as End Time! ");
+            Optional<ButtonType> rs = alert.showAndWait();
+            return check;
+        }else if(start_day.isEqual(end_day) && (time_start.isBefore(time_end) && time_end.isAfter(time_start))) {
 
             check = true;
         }

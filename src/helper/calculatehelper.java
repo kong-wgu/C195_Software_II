@@ -55,7 +55,7 @@ public class calculatehelper {
                                 + "\nAppointment End Time: " + app.getEndTime().toString());
                         Optional<ButtonType> rs = alert.showAndWait();
                         return false;
-                    } else if ((desiredStart.isAfter(start)) && (desiredStart.isBefore(end))) {
+                    } else if ((desiredStart.isAfter(start) || desiredStart.equals(start)) && (desiredStart.isBefore(end))) {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Your Appointment is conflicted with a existing appointment already.\n" +
                                 "Please change your time or modify your pre-existing appointment so it doesn't conflict.\n\n" +
                                 "Your Appointment Start Time: " + desiredStart.toString() + "\nYour Appointment End Time: " + desiredEnd.toString() +
@@ -69,6 +69,10 @@ public class calculatehelper {
                                 "Your Appointment Start Time: " + desiredStart.toString() + "\nYour Appointment End Time: " + desiredEnd.toString() +
                                 "\n\nConflicting Appointment ID: " + app.getID() + "\nAppointment Start Time: " + app.getStartTime().toString()
                                 + "\nAppointment End Time: " + app.getEndTime().toString());
+                        Optional<ButtonType> rs = alert.showAndWait();
+                        return false;
+                    } else if ((desiredStart.equals(desiredEnd) )) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Your Appointment cannot have the same start and end time!");
                         Optional<ButtonType> rs = alert.showAndWait();
                         return false;
                     }
