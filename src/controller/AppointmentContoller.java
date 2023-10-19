@@ -54,6 +54,10 @@ public class AppointmentContoller{
     private ObservableList<Contact> allContacts;
     private ObservableList<Appointment> allAppointments;
 
+    /***
+     * Gets all the prior information so that all choiceboxes can be loaded correctly.
+     * @throws SQLException
+     */
     public void initialize() throws SQLException {
 
         try {
@@ -77,11 +81,8 @@ public class AppointmentContoller{
             allUsers.forEach(user -> UserID.add(Long.toString(user.getUserID())));
             Add_Appointment_User_ID_ChoiceBox.setItems(UserID);
 
-
             Add_Appointment_Start_Time_ChoiceBox.setItems(helper.timeHelper.getAppointmentTimeList());
             Add_Appointment_End_Time_ChoiceBox.setItems(helper.timeHelper.getAppointmentTimeList());
-
-
 
         }catch (SQLException e){
             throw new SQLException("Error Loading Data list, check DBConnection.");
@@ -89,9 +90,17 @@ public class AppointmentContoller{
 
     }
 
-    /** This function focuses on when the user clicks on the add button on the add appointment window */
+    /***
+     * Add Button functionality
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void Add_Appointment_Button_Clicked(ActionEvent actionEvent) throws SQLException, IOException {
 
+        /***
+         * Checks for any blanks and times for validation.
+         */
         try{
             if (!check_for_Blanks()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
@@ -109,19 +118,20 @@ public class AppointmentContoller{
 
                 String Customer_ID = Add_Appointment_Customer_ID_ChoiceBox.getValue();
 
+                // grabs the last ID from the choicebox so that it can be used as the ID.
                 int lastIndent = Customer_ID.lastIndexOf(" ");
                 lastIndent = lastIndent + 1;
                 Customer_ID = Customer_ID.substring(lastIndent);
 
                 String user_ID = Add_Appointment_User_ID_ChoiceBox.getValue();
 
-
+                // grabs the last ID from the choicebox so that it can be used as the ID.
                 String contact = Add_Appointment_Contact_ChoiceBox.getValue();
                 lastIndent = contact.lastIndexOf(" ");
                 lastIndent = lastIndent + 1;
                 contact = contact.substring(lastIndent);
 
-
+                // Formats all the dates to the according date format, so it can be easily matching when doing data validation.
                 String startDate = start_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 startDate = startDate + " " + start_time + ":00";
 
@@ -134,6 +144,7 @@ public class AppointmentContoller{
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+                //Creating variables placeholders
                 long dummy_id = 0;
                 LocalDateTime test_startDate = LocalDateTime.parse(startDate, formatter);
                 LocalDateTime test_endDate = LocalDateTime.parse(endDate, formatter);
@@ -141,11 +152,14 @@ public class AppointmentContoller{
                 long dummy_user_ID = Long.parseLong(user_ID);
                 long dummy_contact = Long.parseLong(contact);
 
+                // Create a appointment holder to retain all the information
                 Appointment test = new Appointment(dummy_id, title, description, location, type, test_startDate, test_endDate, lastUpdate,
                         dummy_customer_ID, dummy_user_ID, dummy_contact);
 
+                // Checks to see if there are any conflicts with other appointments
                 if(calculatehelper.conflictswithAppointments(allAppointments, test)) {
 
+                    // Adds the appointment to the database, no need for the id since it auto-increments.
                     appointmentDAO.addAppointment(title, description, location, type, startDate, endDate,
                             createDate, lastUpdate, Customer_ID, user_ID, contact);
 
@@ -166,7 +180,11 @@ public class AppointmentContoller{
 
     }
 
-    /**  */
+    /***
+     * Cancel Button, returns to the  main menu after a confirmtion screen is shown
+     * @param actionEvent
+     * @throws Exception
+     */
     public void Add_Appointment_Cancel_Button_Clicked(ActionEvent actionEvent) throws Exception{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?");
         Optional<ButtonType> rs = alert.showAndWait();
@@ -182,6 +200,12 @@ public class AppointmentContoller{
         }
     }
 
+    /***
+     * Checks to see if any of the fields are blank,
+     * If so, will inform user of the error with a message pop up.
+     * @return
+     * @throws NullPointerException
+     */
     public boolean check_for_Blanks() throws NullPointerException{
         try {
             String title = Add_Appointment_Title_TextField.getText();
@@ -215,6 +239,11 @@ public class AppointmentContoller{
         }
     }
 
+    /***
+     * Validates the times and dates
+     * If any errors, error pop up informs user.
+     * @return
+     */
     public boolean check_times(){
 
         LocalDate start_day = Add_Appointment_Start_Date_DatePicker.getValue();

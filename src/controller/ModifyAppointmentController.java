@@ -52,9 +52,14 @@ public class ModifyAppointmentController {
     private ObservableList<Contact> allContacts;
     private ObservableList<Appointment> allAppointments;
 
+    /***
+     * Intitializes the form with the Appointment placeholder that was set when the user click the button the main screen form.
+     * @throws SQLException
+     */
     public void initialize() throws SQLException {
 
         try {
+            // Gathers all contact and appointments and sets them into a variable placeholder.
             ContactNames = FXCollections.observableArrayList();
             allContacts = contactDAO.getAllContacts();
             allAppointments = appointmentDAO.getAllAppointments();
@@ -75,12 +80,14 @@ public class ModifyAppointmentController {
             allUsers.forEach(user -> UserID.add(Long.toString(user.getUserID())));
             Modify_Appointment_User_ID_ChoiceBox.setItems(UserID);
 
-
+            // Returns all the available times of teh day to choose. Sets the list into hte choicebox.
             Modify_Appointment_Start_Time_ChoiceBox.setItems(helper.timeHelper.getAppointmentTimeList());
             Modify_Appointment_End_Time_ChoiceBox.setItems(helper.timeHelper.getAppointmentTimeList());
 
+            // Goes through all appoints to the get the placeholder Appointment information. we could transfer it, but much safer to populate data from database.
             for(Appointment app: allAppointments){
                 long id = app.getID();
+                // Sets all information fields with the found appointment.
                 if (id == holderData.getSelected_Appointment()){
                     Modify_Appointment_ID_TextField.setText(Long.toString(app.getID()));
                     Modify_Appointment_Title_TextField.setText(app.getTitle());
@@ -88,7 +95,7 @@ public class ModifyAppointmentController {
                     Modify_Appointment_User_ID_ChoiceBox.setValue( Long.toString(app.getUserID()));
                     Appointment selectedapp = holderData.getHolderAppointment();
 
-
+                    // Gathers all customer information and sets it in the choicebox to choose from.
                     for(Customer customer : allCustomers){
                         long customerid = customer.getID();
                         if (selectedapp.getCustomerID() == customerid){
@@ -99,6 +106,7 @@ public class ModifyAppointmentController {
                         }
                     }
 
+                    // Gathers all Contact information and sets it in the choicebox to choose from.
                     for(Contact contact : allContacts){
                         long contactID = contact.getID();
                         if(selectedapp.getContactID() == contactID){
@@ -109,6 +117,7 @@ public class ModifyAppointmentController {
                         }
                     }
 
+                    // Sets the information of the appointment into the fields
                     Modify_Appointment_Contact_ChoiceBox.setValue(Long.toString(app.getContactID()));
                     Modify_Appointment_Start_Date_DatePicker.setValue(app.getStartTime().toLocalDate());
                     Modify_Appointment_End_Date_DatePicker.setValue(app.getEndTime().toLocalDate());
@@ -118,6 +127,7 @@ public class ModifyAppointmentController {
                     Modify_Appointment_Location_TextField.setText(app.getLocation());
                     Modify_Appointment_Type_TextField.setText(app.getType());
 
+                    // Leave loop as the needed instructions are all done.
                     break;
                 }
             }
@@ -128,15 +138,22 @@ public class ModifyAppointmentController {
 
     }
 
-    /** This function focuses on when the user clicks on the add button on the add appointment window */
+    /***
+     * Modify button clicked on the Modify Appointment form.
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void Modify_Appointment_Button_Clicked(ActionEvent actionEvent) throws SQLException, IOException {
 
         try{
+            // Checks to see if there are any blank fields on the form. Will also check the times and dates to make sure that they are validated as well.
             if (!check_for_Blanks()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
                 Optional<ButtonType> rs = alert.showAndWait();
             }else if (check_times()) {
 
+                // Sets all variable placeholders to the data fields entered on the form.
                 String id = Modify_Appointment_ID_TextField.getText();
                 String type = Modify_Appointment_Type_TextField.getText();
                 String title = Modify_Appointment_Title_TextField.getText();
@@ -149,21 +166,19 @@ public class ModifyAppointmentController {
 
                 String Customer_ID = Modify_Appointment_Customer_ID_ChoiceBox.getValue();
 
-
-
+                // Grabs the ID on the ends of the choicebox so it can be assigned to the variable.
                 int lastIndent = Customer_ID.lastIndexOf(" ");
                 lastIndent = lastIndent + 1;
                 Customer_ID = Customer_ID.substring(lastIndent);
 
                 String user_ID = Modify_Appointment_User_ID_ChoiceBox.getValue();
 
-
                 String contact = Modify_Appointment_Contact_ChoiceBox.getValue();
                 lastIndent = contact.lastIndexOf(" ");
                 lastIndent = lastIndent + 1;
                 contact = contact.substring(lastIndent);
 
-
+                // Formats date and time together so it can formatted correctly to be uploaded to the database.
                 String startDate = start_date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 startDate = startDate + " " + start_time + ":00";
 
@@ -175,6 +190,7 @@ public class ModifyAppointmentController {
                 String lastUpdate = createDate;
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
 
                 long dummy_id = Long.parseLong(id);
                 LocalDateTime test_startDate = LocalDateTime.parse(startDate, formatter);

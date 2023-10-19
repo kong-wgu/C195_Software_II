@@ -42,10 +42,11 @@ public class AddCustomerController {
     private long currentCountryID;
     private long currentDivisionID;
 
-
+    /***
+     * Grabs all information prior so it can be loaded into the choicebox for the form.
+     * @throws SQLException
+     */
     public void initialize() throws SQLException {
-
-        System.out.println("Customer Screen loaded");
 
         try{
             ObservableList<String> CountryList = FXCollections.observableArrayList();
@@ -63,7 +64,11 @@ public class AddCustomerController {
     }
 
 
-    /** */
+    /***
+     * Save Button
+     * @param actionEvent
+     * @throws Exception
+     */
     public void Add_Customer_Save_Button_Clicked(ActionEvent actionEvent) throws Exception {
 
         if(!check_for_blanks()){
@@ -97,7 +102,11 @@ public class AddCustomerController {
 
     }
 
-    /** */
+    /***
+     * Cancel button that will prompt confirmation. If confirmed, will go back to the main screen.
+     * @param actionEvent
+     * @throws Exception
+     */
     public void Add_Customer_Cancel_Button_Clicked(ActionEvent actionEvent) throws Exception {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?");
         Optional<ButtonType> rs = alert.showAndWait();
@@ -114,6 +123,11 @@ public class AddCustomerController {
 
     }
 
+    /***
+     * Checks for blanks of all fields
+     * @return
+     * @throws Exception
+     */
     public boolean check_for_blanks() throws Exception{
         try {
             String name = Add_Customer_Name_TextField.getText();
@@ -123,6 +137,7 @@ public class AddCustomerController {
             String state = Add_Customer_State_ChoiceBox.getValue();
             String postalCode = Add_Customer_Postal_Code_TextField.getText();
 
+            // If any blanks, returns false, if not, will assign current division ID.
             if (name.isBlank() || address.isBlank() || address.isBlank() || number.isBlank() ||
             country.isBlank() || state.isBlank() || postalCode.isBlank()){
                 return false;
@@ -137,9 +152,15 @@ public class AddCustomerController {
 
     }
 
+    /***
+     * Once the user selects a Country, updates the division choicebox accordingly to the country.
+     * @param actionEvent
+     */
     public void country_selected(ActionEvent actionEvent) {
         String selectedcountry = Add_Customer_Country_ChoiceBox.getValue();
         long countryid = 0; boolean found = false;
+
+        // gets country ID so correct divisions can be loaded.
         for(Country country : allCountries ){
             String name = country.getName();
             long id = country.getID();
@@ -150,6 +171,7 @@ public class AddCustomerController {
             }
         }
 
+        // gets Division thats is under the country ID and loads onto the division choicebox.
         if(found){
             ObservableList<String> divisionList = FXCollections.observableArrayList();
 
@@ -166,6 +188,12 @@ public class AddCustomerController {
 
     }
 
+    /***
+     * Gets the division ID of the division that is placed withi the choicebox for division.
+     * More of a helper than of that as a module.
+     * @return
+     * @throws NullPointerException
+     */
     public String getDivisionID() throws NullPointerException{
         String divisionName = Add_Customer_State_ChoiceBox.getValue();
         ObservableList<Division> divisions = allDivisions;
