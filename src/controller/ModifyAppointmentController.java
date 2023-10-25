@@ -224,7 +224,11 @@ public class ModifyAppointmentController {
 
     }
 
-    /**  */
+    /***
+     * Cancel button functionality
+     * @param actionEvent
+     * @throws Exception
+     */
     public void Modify_Appointment_Cancel_Button_Clicked(ActionEvent actionEvent) throws Exception{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?");
         Optional<ButtonType> rs = alert.showAndWait();
@@ -240,7 +244,11 @@ public class ModifyAppointmentController {
         }
     }
 
-
+    /***
+     * Checks to see if there are any blank fields on the form.
+     * @return
+     * @throws NullPointerException
+     */
     public boolean check_for_Blanks() throws NullPointerException{
         try {
             String title = Modify_Appointment_Title_TextField.getText();
@@ -274,6 +282,10 @@ public class ModifyAppointmentController {
         }
     }
 
+    /***
+     * Checks the time to validate all possible errors.
+     * @return
+     */
     public boolean check_times(){
 
         LocalDate start_day = Modify_Appointment_Start_Date_DatePicker.getValue();

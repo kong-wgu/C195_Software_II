@@ -16,7 +16,14 @@ import java.time.format.DateTimeFormatter;
 
 public class customerDAO {
 
+    /***
+     * Returns a list of all customers from the database
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Customer> getAllCustomers() throws SQLException{
+
+        // Must get all the divisions so we can set the division name when making a Customer object.
         ObservableList<Division> divisionObservableList = divisionDAO.getAllDivisions();
         String divisionName = "";
 
@@ -35,8 +42,7 @@ public class customerDAO {
                 long divisionID = rs.getLong("Division_ID");
                 String createdBy = rs.getString("Created_By");
 
-
-
+                // Searches for the name of the Division rather than the ID.
                 for(Division division: divisionObservableList){
                     if(divisionID == division.getID()){
                         divisionName = division.getName();
@@ -55,6 +61,12 @@ public class customerDAO {
 
     }
 
+    /***
+     * Adds a customer into the database, ID will always auto add
+     * @param newCustomer
+     * @param createDate
+     * @throws SQLException
+     */
     public static void addCustomer(Customer newCustomer, String createDate) throws SQLException {
 
         String user = User.userLoggedIn;
@@ -88,18 +100,27 @@ public class customerDAO {
     }
 
 
-
+    /***
+     * Updates customer by using a given Customer object and the division name to update the database
+     * @param newCustomer
+     * @param lastUpdate
+     * @param division
+     * @return
+     * @throws SQLException
+     */
     public static boolean updateCustomer(Customer newCustomer, String lastUpdate, String division) throws SQLException{
         long Customer_ID = newCustomer.getID();
 
-
+        // Sets all variable placeholder to holder attributes of the customer object.
         String name = newCustomer.getName();
         String address = newCustomer.getAddress();
         String postalCode = newCustomer.getPostalCode();
         String phone = newCustomer.getPhone();
 
+
         String divisionID = division;
 
+        // Sets the user who is currently logged on.
         String lastUpdatedBy = User.userLoggedIn;
 
         try{
@@ -127,6 +148,12 @@ public class customerDAO {
 
     }
 
+    /***
+     * Deletes the desired row by using the customer ID.
+     * @param customerID
+     * @return
+     * @throws SQLException
+     */
     public static boolean deleteCustomer(long customerID) throws SQLException{
 
         try{

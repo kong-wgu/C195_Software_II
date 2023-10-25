@@ -12,6 +12,13 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
+    /***
+     * Validates user by the given username and password inputs, will return a User object back.
+     * @param username
+     * @param password
+     * @return
+     * @throws SQLException
+     */
     public static User validateUser(String username, String password) throws SQLException {
 
         try {
@@ -29,7 +36,11 @@ public class UserDAO {
         }
     }
 
-
+    /***
+     * Gathers all user from the database and returns back as a list.
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<User> getAllUsers() throws SQLException {
 
         String sqlQuery = "Select * from users";

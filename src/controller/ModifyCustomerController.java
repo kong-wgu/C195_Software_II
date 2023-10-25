@@ -39,12 +39,16 @@ public class ModifyCustomerController {
     private long currentDivisionID;
 
 
-
+    /***
+     * Sets all the fields from the selected customer from the main screen
+     * @throws SQLException
+     */
     public void initialize() throws SQLException {
 
         System.out.println("Customer Screen loaded");
 
         try{
+            // Collects all countries within a list
             ObservableList<String> CountryList = FXCollections.observableArrayList();
 
             allDivisions = divisionDAO.getAllDivisions();
@@ -53,6 +57,7 @@ public class ModifyCustomerController {
             allCountries.forEach(country -> CountryList.add(country.getName()));
             Modify_Customer_Country_ChoiceBox.setItems(CountryList);
 
+            // Variable placeholder for the selected customer.
             Customer selectedCustomer = helper.holderData.getHolderCustomer();
 
             Modify_Customer_ID_TextField.setText(Long.toString(selectedCustomer.getID()));
@@ -74,14 +79,21 @@ public class ModifyCustomerController {
 
     }
 
-    /** */
+    /***
+     * Save Button for the Modify Customer form
+     * @param actionEvent
+     * @throws Exception
+     * @throws NullPointerException
+     */
     public void Modify_Customer_Save_Button_Clicked(ActionEvent actionEvent) throws Exception, NullPointerException {
 
+        // Checks for any blank within the form.
         if(!check_for_blanks()){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please Ensure that all fields are filled in!");
             Optional<ButtonType> rs = alert.showAndWait();
         }else{
 
+            // Sets the information from the fields from the form
             long id = Long.parseLong(Modify_Customer_ID_TextField.getText());
             String name = Modify_Customer_Name_TextField.getText();
             String address = Modify_Customer_Address_TextField.getText();
@@ -91,11 +103,13 @@ public class ModifyCustomerController {
             String postalCode = Modify_Customer_Postal_Code_TextField.getText();
             String division = Long.toString(currentDivisionID);
 
+            // checks to see if the data return is null
             try{
                 division = getDivisionID();
             }catch(NullPointerException e){
                 throw new NullPointerException("Division ID was not Found, please check the database for accurate ID.");
             }
+
 
             Customer newCustomer = new Customer(id, name, address,postalCode, phone, currentDivisionID, state);
 
@@ -115,7 +129,11 @@ public class ModifyCustomerController {
 
     }
 
-    /** */
+    /***
+     * Cancel Button, confirms with user first.
+     * @param actionEvent
+     * @throws Exception
+     */
     public void Modify_Customer_Cancel_Button_Clicked(ActionEvent actionEvent) throws Exception {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?");
         Optional<ButtonType> rs = alert.showAndWait();
@@ -132,6 +150,11 @@ public class ModifyCustomerController {
 
     }
 
+    /***
+     * Checks to see if there are any blank fields on the form
+     * @return
+     * @throws Exception
+     */
     public boolean check_for_blanks() throws Exception{
         try {
             String name = Modify_Customer_Name_TextField.getText();
@@ -155,10 +178,15 @@ public class ModifyCustomerController {
 
     }
 
-
+    /***
+     * Once user selects a country, the division are loaded on the choicebox
+     * @param actionEvent
+     */
     public void country_selected(ActionEvent actionEvent) {
         String selectedcountry = Modify_Customer_Country_ChoiceBox.getValue();
         long countryid = 0; boolean found = false;
+
+        // Checks for the selected country, sets the current country to the selected country so it can be used to get eh divisions
         for(Country country : allCountries ){
             String name = country.getName();
             long id = country.getID();
@@ -170,8 +198,10 @@ public class ModifyCustomerController {
         }
 
         if(found){
+            // List placeholder to collect all divisions related the country
             ObservableList<String> divisionList = FXCollections.observableArrayList();
 
+            // checks to see any divisions that is under country, saves into the list placeholder
             for(Division div : allDivisions){
                 long divisionID = div.getCountryID();
                 if(divisionID == countryid){
@@ -180,16 +210,23 @@ public class ModifyCustomerController {
                     divisionList.add(state);
                 }
             }
+            // Once all divisions are found, loads all division to hte choicebox.
             Modify_Customer_State_ChoiceBox.setItems(divisionList);
         }
 
     }
 
+    /***
+     * Returns the country name with the given division ID
+     * @param divisionID
+     * @return
+     */
     public String getCountryname(long divisionID){
         ObservableList<Division> divisions = allDivisions;
         ObservableList<Country> countries = allCountries;
         String countryname = "";
 
+        // Uses the Division ID to get the country it belongs with.
         for(Division div : divisions){
            if(div.getID() == divisionID){
                long countryid = div.getCountryID();
@@ -204,6 +241,11 @@ public class ModifyCustomerController {
         return countryname;
     }
 
+    /***
+     * Returns the division name based off the ID given.
+     * @param divisionID
+     * @return
+     */
     public String getDivisionName(long divisionID){
         ObservableList<Division> divisions = allDivisions;
         String name = "";
@@ -216,11 +258,17 @@ public class ModifyCustomerController {
         return name;
     }
 
+    /***
+     * Returns the division ID by checking the choicebox.
+     * @return
+     * @throws NullPointerException
+     */
     public String getDivisionID() throws NullPointerException{
         String divisionName = Modify_Customer_State_ChoiceBox.getValue();
         ObservableList<Division> divisions = allDivisions;
         String divisionID = null;
 
+        // Using the choicebox value to get the division ID it is associated with.
         for (Division div : divisions) {
             String name = div.getName();
             if (name.equals(divisionName)) {

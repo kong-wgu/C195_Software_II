@@ -10,6 +10,11 @@ import java.sql.SQLException;
 
 public class divisionDAO {
 
+    /***
+     * Gets all the division from the database and returns as a list.
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Division> getAllDivisions() throws SQLException {
 
         String querySQL = "Select * from first_level_divisions";

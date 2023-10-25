@@ -16,18 +16,30 @@ import java.util.Optional;
 
 public class calculatehelper {
 
+    /***
+     * Checks to see if the given appointment conflicts with any other appointment
+     * @param allAppointments
+     * @param desiredAppointment
+     * @return
+     * @throws NullPointerException
+     */
     public static boolean conflictswithAppointments (ObservableList<Appointment> allAppointments, Appointment desiredAppointment) throws NullPointerException{
+        // Sets an Appoinment placeholder for the given appointment
         Appointment holder = desiredAppointment;
 
+        // Sets variables for the data from the placeholder appointment.
         LocalDate desiredDate = holder.getStartTime().toLocalDate();
-
         LocalDateTime desiredStart = holder.getStartTime();
         LocalDateTime desiredEnd = holder.getEndTime();
+
+        // Creates a list and set that list to the given list of all appointments.
         ObservableList<Appointment> appointmentObservableList = FXCollections.observableArrayList();
         appointmentObservableList = allAppointments;
 
+        // uses a function to check the working days and if the desired appointment falls within working days
         if(!IswithinWorkingDaysTimes(desiredAppointment)){return false;}
 
+        // checks to see if the we are modify the same appointment, this way, we do not need to check other appointment time conflicts, if the original times of the appointment has not changed.
         for (Appointment app : appointmentObservableList){
             if(app.getID() == holder.getID()) {
                 if (check_for_same_app_times(holderData.getHolderAppointment(), desiredStart, desiredEnd)) {
@@ -36,8 +48,7 @@ public class calculatehelper {
             }
         }
 
-
-
+        // goes through each appointment and checks to see if the desired appointments is conflicting with their times.
         for (Appointment app : appointmentObservableList) {
             LocalDate appDate = app.getStartTime().toLocalDate();
             LocalDateTime start = app.getStartTime();
@@ -83,6 +94,11 @@ public class calculatehelper {
         return true;
     }
 
+    /***
+     * Gets the current appointments by checking which appointments fall under the current week
+     * @param allAppointments
+     * @return
+     */
     public ObservableList<Appointment> getCurrentWeekAppointments(ObservableList<Appointment> allAppointments){
         ObservableList<Appointment> currentWeek = FXCollections.observableArrayList();
 
@@ -92,8 +108,10 @@ public class calculatehelper {
         String currentDayWeek = currentTime.getDayOfWeek().toString();
         int currentDayMonth = currentTime.getDayOfMonth();
 
+        // Returns the list of the MonthDays as a list, if any appointment matches, we will know it is within the same week.
         ObservableList<Integer> week = weekListing(currentDayWeek, currentDayMonth);
 
+        // if found, will add appointment to currentweek list
         for(Appointment app : allAppointments){
             String appMonth = app.getStartTime().getMonth().toString();
             int appMonthDay = app.getStartTime().getDayOfMonth();
@@ -107,14 +125,23 @@ public class calculatehelper {
 
     }
 
+    /***
+     * Checks to see if the appointment is same as it's own appointment times.
+     * @param oldAppointment
+     * @param newStartTime
+     * @param newEndTime
+     * @return
+     */
     public static boolean check_for_same_app_times(Appointment oldAppointment, LocalDateTime newStartTime, LocalDateTime newEndTime){
+        // Sets the old and new start times
         LocalDateTime oldAppStart_time = oldAppointment.getStartTime();
         LocalDateTime newAppStart_time = newStartTime;
 
-
+        // Sets the old and new end times
         LocalDateTime oldAppEnd_time = oldAppointment.getEndTime();
         LocalDateTime newAppEnd_time = newEndTime;
 
+        // checks to see if the new and old times match each other
         if(((oldAppEnd_time.isEqual(newAppEnd_time)) && (oldAppStart_time.isEqual(newAppStart_time)))){
             return true;
         }else{
@@ -122,14 +149,21 @@ public class calculatehelper {
         }
     }
 
-
+    /***
+     * Returns a list of week days to determine the entire week listing.
+     * @param DayWeek
+     * @param DayMonth
+     * @return
+     */
     public static ObservableList<Integer> weekListing(String DayWeek, int DayMonth){
         ObservableList<Integer> week = FXCollections.observableArrayList();
 
+        // Sets the 3 places at a initial value
         int backward = 0;
         int forward = 0;
         int place = 0;
 
+        // based off what the dayweek name is, will set the places for each one.
         if(DayWeek.equals("SUNDAY")){
             forward = 6;
         }else if(DayWeek.equals("MONDAY")){
@@ -157,8 +191,10 @@ public class calculatehelper {
             place = 6;;
         }
 
+        // Sets a placeholder for the Day of the month
         int holder = DayMonth;
 
+        // if it's a sunday or Saturday, will set the numbers accordingly. If not, will proceed to label the rest of the numbers within the listing.
         if(backward == 0){
 
             for(int i = 0; i < forward; i ++){
@@ -196,20 +232,27 @@ public class calculatehelper {
             week = week.sorted();
         }
 
+        // Returns the integer week listing.
         return week;
 
     }
 
+    /***
+     * Checks to see if the appointment is within the working days, return a boolean based off it is or not.
+     * @param app
+     * @return
+     */
     public static boolean IswithinWorkingDaysTimes(Appointment app){
         LocalTime start = app.getStartTime().toLocalTime();
         LocalTime end = app.getEndTime().toLocalTime();
         String dayWeek = app.getStartTime().getDayOfWeek().toString();
         int dayMonth = app.getStartTime().getDayOfMonth();
 
+        // Gets the week listing and uses it to determine where the current appointment is at.
         ObservableList<Integer> weekDays = weekListing(dayWeek, dayMonth);
         ObservableList<String> weekNames = getWeekNames();
 
-
+        // checks to see the if the appointment is either on Sunday or Saturday
         if(dayWeek.equals(weekNames.get(0)) || dayWeek.equals(weekNames.get(6))){
             Alert alert = new Alert(Alert.AlertType.ERROR, "Your Appointment Date are out of the working hours.\n" +
                     "Please change your time so it doesn't conflict.\n\n" +
@@ -219,10 +262,12 @@ public class calculatehelper {
             return false;
         }
 
+        // Sets the date format for the localtime and sets the allowed times
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalTime AllowedStartTime = LocalTime.parse("08:00:00", formatter);
         LocalTime AllowedEndTime = LocalTime.parse("22:00:00", formatter);
 
+        // validates if the times are between the working times.
         if((start.isBefore(AllowedStartTime)) || (end.isAfter(AllowedEndTime)) ){
             Alert alert = new Alert(Alert.AlertType.ERROR, "Your Appointment times are out of the working hours.\n" +
                     "Please change your time so it doesn't conflict.\n\n" +

@@ -14,6 +14,13 @@ public class DBConnection {
     private static final String mysql_jdbc_driver = "com.mysql.cj.jdbc.Driver";
     public static Connection conn;
 
+    /***
+     * Gets and make the connection to the database open
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws Exception
+     */
     public static Connection makeConnection() throws ClassNotFoundException, SQLException, Exception{
 
         try{
@@ -26,6 +33,12 @@ public class DBConnection {
         return conn;
     }
 
+    /***
+     * closes the connection to the database
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws Exception
+     */
     public static void closeConnection() throws  ClassNotFoundException, SQLException, Exception{
         try{
             conn.close();
@@ -36,6 +49,10 @@ public class DBConnection {
 
     }
 
+    /***
+     * Returns the object connection of the currrent connection to the database.
+     * @return
+     */
     public static Connection getCurrentConnection() {
 
         return conn;

@@ -9,7 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class countryDAO {
-
+    /***
+     * returns a list of all countries from the database
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Country> getAllCountries() throws SQLException{
         String querySQL = "Select Country_ID, Country from countries";
         PreparedStatement ps  = DBConnection.getCurrentConnection().prepareStatement(querySQL);
