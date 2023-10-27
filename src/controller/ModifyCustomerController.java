@@ -44,6 +44,7 @@ public class ModifyCustomerController {
 
     /***
      * Sets all the fields from the selected customer from the main screen
+     * Lambda #2 - Helps get the information from each Country list to put on the choicebox on the form. Saves times from a for loop.
      * @throws SQLException
      */
     public void initialize() throws SQLException {
@@ -57,6 +58,7 @@ public class ModifyCustomerController {
             allDivisions = divisionDAO.getAllDivisions();
             allCountries = countryDAO.getAllCountries();
 
+            // Lambda #2 - helps get each object information and cleaner code as well.
             allCountries.forEach(country -> CountryList.add(country.getName()));
             Modify_Customer_Country_ChoiceBox.setItems(CountryList);
 

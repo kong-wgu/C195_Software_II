@@ -137,6 +137,7 @@ public class AppointmentReports {
 
     /** returns the type */
     public String getType(){return this.type;}
-
+    public long getTotalCount(){return this.totalCount;}
+    public long getTotaldivisionCustomers(){return this.totaldivisionCustomers;}
 
 }

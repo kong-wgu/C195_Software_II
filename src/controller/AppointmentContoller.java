@@ -59,6 +59,7 @@ public class AppointmentContoller{
 
     /***
      * Gets all the prior information so that all choiceboxes can be loaded correctly.
+     * Lambda #1 - Able to loop through the list with an variable placeholder that will collect each object information being looped through.
      * @throws SQLException
      */
     public void initialize() throws SQLException {
