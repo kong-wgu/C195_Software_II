@@ -24,13 +24,16 @@ public class LoginHelper {
 
             String datetime = ZonedDateTime.now(ZoneOffset.UTC).toString();
             FileWriter fw = new FileWriter(file, true);
-            PrintWriter pw = new PrintWriter(fw);
 
             if(isSucessful){
-                pw.print("User:" + user + " has successfully logged in at: " + datetime + "\n");
+                fw.append("User: " + user + " has SUCCESSFULLY logged in at: " + datetime + "\n");
+                fw.flush();
+                fw.close();
                 return true;
             }else{
-                pw.print("User:" + user + " failed to log in at: " + datetime + "\n");
+                fw.append("User: " + user + " FAILED to log in at: " + datetime + "\n");
+                fw.flush();
+                fw.close();
             }
             return false;
 
