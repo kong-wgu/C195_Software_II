@@ -26,8 +26,12 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/***
+ * Login Controller that will handle form data and also login validation to see if user is able to login.
+ */
 public class LoginController implements Initializable {
 
+    // Resource bundle that contains both english and French translation.
     private ResourceBundle langbundle;
     private long appointmentID;
     private LocalDateTime endTime;

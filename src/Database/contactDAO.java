@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/***
+ * This is a Data Access Object class that will allow any modification regarding updates, retrival or delete of contacts on the database.
+ */
 public class contactDAO {
 
     /***

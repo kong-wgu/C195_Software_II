@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/***
+ * This is a Data Access Object that works between the Division table and Division object.
+ */
 public class divisionDAO {
 
     /***

@@ -11,6 +11,7 @@ import java.time.Month;
 
 /***
  * This class is a helper class that will contain methods and lists to help with the report form.
+ * Should be keeping or returning the list of the data
  */
 public class AppointmentReports {
 

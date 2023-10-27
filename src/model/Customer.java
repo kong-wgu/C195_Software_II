@@ -2,6 +2,10 @@ package model;
 
 import java.time.LocalDateTime;
 
+/***
+ * This class is store all information that the customer table from database.
+ * It contains getter and setter methods, including mehtod to allow create a object of this class to use.
+ */
 public class Customer {
 
     private long ID;
@@ -16,6 +20,16 @@ public class Customer {
     private long divisionID;
     private String divisionName;
 
+    /***
+     * Creates a Customer object with the given data.
+     * @param ID
+     * @param name
+     * @param address
+     * @param postalCode
+     * @param phone
+     * @param divisionID
+     * @param divisionName
+     */
     public Customer(long ID,String name, String address, String postalCode, String phone, long divisionID, String divisionName){
         this.ID = ID;
         this.name = name;

@@ -2,12 +2,9 @@ package model;
 
 import java.time.format.DateTimeFormatter;
 
-/**
- * This is hte POJO for the user class containing
- * methods for storing data using the DAO Class.
- * @author Kong Chang
+/***
+ * This class is hold all attributes of the user, specifically the user who is able ot log in sucessfully.
  */
-
 public class User {
     public long id;
     public String name;
@@ -17,6 +14,11 @@ public class User {
 
     public static String userLoggedIn;
 
+    /***
+     * Creates a User Object with the given information.
+     * @param id
+     * @param name
+     */
     public User(long id, String name){
         this.id  = id;
         this.name = name;

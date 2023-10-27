@@ -3,6 +3,10 @@ package model;
 import javax.management.Descriptor;
 import java.time.LocalDateTime;
 
+/***
+ * This Class is the Appointment class where it will containing all methods regarding the setter and getters.
+ * It will also be the ability to create an Appointment object as well.
+ */
 public class Appointment {
 
     private long ID;
@@ -21,8 +25,20 @@ public class Appointment {
     private long contactID;
     private String contactName;
 
-
-
+    /***
+     * Creates an appointment object with the given pass through attributes.
+     * @param appointment_ID
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param startTime
+     * @param endTime
+     * @param createdBy
+     * @param customerID
+     * @param userID
+     * @param contactID
+     */
      public Appointment(long appointment_ID,String title, String description, String location, String type, LocalDateTime startTime, LocalDateTime endTime,
                         String createdBy,long customerID, long userID, long contactID) {
          this.ID = appointment_ID;
@@ -38,6 +54,7 @@ public class Appointment {
          this.contactID = contactID;
 
      }
+
 
     public long getID() {return ID;}
     public void setID(long ID){
@@ -71,7 +88,6 @@ public class Appointment {
 
     public LocalDateTime getEndTime() {return endTime;}
     public void setEndTime(LocalDateTime endTime){this.endTime = endTime;}
-
 
     public String getCreatedBy() {return createdBy;}
     public void setCreatedBy(String createdBy){

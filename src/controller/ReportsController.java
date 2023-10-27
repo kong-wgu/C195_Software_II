@@ -26,6 +26,10 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/***
+ * Logic controller for the report form, includes setting or getting information to update the fields on the form.
+ * Will also do logic validiation as well.
+ */
 public class ReportsController {
 
 

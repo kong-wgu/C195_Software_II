@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/***
+ * This is a data access object class that will allow the user to modify or add on appointments.
+ */
 public class customerDAO {
 
     /***

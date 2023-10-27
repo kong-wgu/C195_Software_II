@@ -34,8 +34,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
+/***
+ * Controller for the main screen, set and get information from the database.
+ */
 public class MainScreenController {
-
 
     @FXML private TableView<Appointment> Appointment_tableview;
     @FXML private TableView<Customer> Customers_tableview;
@@ -61,14 +63,7 @@ public class MainScreenController {
     @FXML private RadioButton Appointment_all_appointment_radiobutton;
     @FXML private RadioButton Appointment_weekly_radiobutton;
     @FXML private RadioButton Appointment_monthly_radiobutton;
-    @FXML private Button Appointment_add_button;
-    @FXML private Button Appointment_update_button;
-    @FXML private Button Appointment_delete_button;
-    @FXML private Button Customers_add_button;
-    @FXML private Button Customers_update_button;
-    @FXML private Button Customers_delete_button;
-    @FXML private Button MainScreen_reports_button;
-    @FXML private Button MainScreen_logout_button;
+
 
     private ObservableList<Appointment> allAppointments;
 

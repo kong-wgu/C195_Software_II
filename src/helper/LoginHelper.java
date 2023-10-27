@@ -6,10 +6,20 @@ import java.io.PrintWriter;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+/***
+ * This class is to help record any logins that are sucessull.
+ */
 public class LoginHelper {
     private static String file = "login_activity.txt";
 
-    public static void addLogin(String user, boolean isSucessful) throws IOException {
+    /***
+     * Determines if the user has logged in sucessfully, will return a true/false value back.
+     * @param user
+     * @param isSucessful
+     * @return
+     * @throws IOException
+     */
+    public static boolean addLogin(String user, boolean isSucessful) throws IOException {
         try{
 
             String datetime = ZonedDateTime.now(ZoneOffset.UTC).toString();

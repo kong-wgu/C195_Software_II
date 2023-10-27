@@ -29,6 +29,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+/***
+ * Controller for the modify appointment form, will set, get, and validation information for and on the form.
+ */
 public class ModifyAppointmentController {
 
     @FXML private TextField Modify_Appointment_ID_TextField;

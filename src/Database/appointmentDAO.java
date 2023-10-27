@@ -11,6 +11,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/***
+ * This class is a data access object that will allow connection between updating,
+ * including getter, setters, etc.
+ */
 public class appointmentDAO {
 
     /***

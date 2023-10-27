@@ -31,6 +31,9 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/***
+ * Controller for the appointment, includes get and set methods, logic validation and manipulation of the add appointment form.
+ */
 public class AppointmentContoller{
 
     @FXML private TextField Add_Appointment_Type_TextField;

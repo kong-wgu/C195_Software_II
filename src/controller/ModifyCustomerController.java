@@ -21,6 +21,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+/***
+ * Controller for the Modify Customer form, will set and get information to update the form.
+ */
 public class ModifyCustomerController {
 
     @FXML private TextField Modify_Customer_ID_TextField;

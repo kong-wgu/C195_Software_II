@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
+/***
+ * This class is a Data Access Object that will validate the connection of the database.
+ */
 public class DBConnection {
 
     private static final String databaseName = "client_schedule";

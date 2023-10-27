@@ -14,6 +14,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Optional;
 
+/***
+ * This is a helper class that will be doing validations and checks.
+ */
 public class calculatehelper {
 
     /***
@@ -282,6 +285,7 @@ public class calculatehelper {
         return false;
     }
 
+    // Returns the week names as a string list.
     public static ObservableList<String> getWeekNames(){
         ObservableList<String> weekNames = FXCollections.observableArrayList();
         weekNames.add("SUNDAY");

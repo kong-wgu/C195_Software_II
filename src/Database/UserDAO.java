@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/***
+ * This class is a data access object that is a layer between the database and the User object.
+ */
 public class UserDAO {
 
     /***

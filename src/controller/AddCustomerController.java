@@ -25,6 +25,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/***
+ * Controller for adding customer, this would allow set and get methods, also manipulates the add customer form.
+ */
 public class AddCustomerController {
 
     @FXML private TextField Add_Customer_ID_TextField;

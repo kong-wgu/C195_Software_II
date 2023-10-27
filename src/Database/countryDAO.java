@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/***
+ * This is a Data access layer between the user of the database or recruit you into one.
+ */
 public class countryDAO {
     /***
      * returns a list of all countries from the database
